@@ -1,0 +1,16 @@
+[options]
+scaling_mode = none
+overlay = true
+overlay_font = sans:10
+background = checks
+
+[binds]
+<Shift+less> = rotate by -90
+<Shift+greater> = rotate by 90
+<equal> = zoom 1
+0 = zoom actual
+p = prev
+n = next
+y = exec echo $imv_current_file
+
+# vim: se ft=dosini:

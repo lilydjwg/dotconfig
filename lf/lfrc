@@ -1,0 +1,7 @@
+map D delete
+
+set nohidden
+set hiddenfiles ".*:*~"
+map H set hidden!
+
+map <c-z> $ kill -TSTP $PPID

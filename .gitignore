@@ -1,0 +1,11 @@
+/*
+!/.gitignore
+!/alacritty
+!/imv
+!/lf
+!/mako
+!/mpv
+/mpv/*/
+!/swaylock
+!/waybar
+!/wayfire.ini

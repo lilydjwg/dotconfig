@@ -1,0 +1,15 @@
+[default]
+sub-codepage = cp936
+demuxer-readahead-secs = 20
+
+hwdec = auto
+# this will cause broken cover images
+# hwdec-codecs = all
+
+ytdl-raw-options=yes-playlist=
+# mpv will by default pass "bestvideo+bestaudio/best", which selects h264 over vp9 because of its larger size
+ytdl-format=(bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840])+bestaudio
+# use yt-dlp
+script-opts=ytdl_hook-ytdl_path=yt-dlp
+
+demuxer-force-retry-on-eof = yes
