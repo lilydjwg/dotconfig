@@ -4,3 +4,7 @@ text-color=#333333ff
 border-color=#b3b3ffdd
 border-radius=4
 height=500
+layer=overlay
+
+[mode=locked]
+layer=top
