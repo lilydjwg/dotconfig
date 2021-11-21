@@ -1,8 +1,7 @@
 [options]
-scaling_mode = none
 overlay = true
 overlay_font = sans:10
-background = checks
+background = ffffff
 
 [binds]
 <Shift+less> = rotate by -90
