@@ -105,3 +105,22 @@ window#waybar {
 #idle_inhibitor.activated {
   color: #ecf0f1;
 }
+
+#custom-aqi.green {
+  color: #00e400;
+}
+#custom-aqi.yellow {
+  color: #ffff00;
+}
+#custom-aqi.orange {
+  color: #ff7e00;
+}
+#custom-aqi.red {
+  color: #ff0000;
+}
+#custom-aqi.purple {
+  color: #99004c;
+}
+#custom-aqi.maroon {
+  color: #7e0023;
+}

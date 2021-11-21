@@ -6,7 +6,7 @@
   // "width": 1280, // Waybar width
   "output": ["eDP-1", "DP-2", "!HDMI-A-1"],
   // Choose the order of the modules
-  "modules-left": ["custom/media"],
+  "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": [],
   "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
@@ -80,5 +80,9 @@
     "on-scroll-down": "playerctl next",
     "tooltip": false,
   },
+  "custom/aqi": {
+    "exec": "~/.config/waybar/scripts/aqi",
+    "on-click": "~/.config/waybar/scripts/aqi open-url",
+    "return-type": "json",
+  },
 }
-
