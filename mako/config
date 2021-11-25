@@ -8,3 +8,9 @@ layer=overlay
 
 [mode=locked]
 layer=top
+
+[urgency=high]
+text-color=#ff5c57ff
+border-color=#ff5c57bb
+
+# vim: se ft=dosini:
