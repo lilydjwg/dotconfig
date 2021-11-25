@@ -1,13 +1,9 @@
-{
-  // vim: se ft=javascript:
-  // "layer": "top", // Waybar at top layer
-  // "position": "bottom", // Waybar position (top|bottom|left|right)
-  "height": 20, // Waybar height (to be removed for auto height)
-  // "width": 1280, // Waybar width
-  "output": ["eDP-1", "DP-2", "!HDMI-A-1"],
-  // Choose the order of the modules
+// vim: se ft=javascript:
+[{
+  "height": 20,
+  "output": "eDP-1",
   "modules-left": ["custom/aqi", "custom/media"],
-  "modules-center": [],
+  "modules-center": ["custom/taskmaid"],
   "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
     "format": "{icon}",
@@ -85,4 +81,183 @@
     "on-click": "~/.config/waybar/scripts/aqi open-url",
     "return-type": "json",
   },
-}
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid eDP-1",
+    "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
+    "return-type": "json",
+  },
+}, {
+  "height": 20,
+  "output": "DP-2",
+  "modules-left": ["custom/aqi", "custom/media"],
+  "modules-center": ["custom/taskmaid"],
+  "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "clock": {
+    "format": "{:%Y-%m-%d %H:%M:%S %A}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "interval": 1,
+  },
+  "cpu": {
+    "format": "CPU {usage:2d}<span color='gray'>%</span> {load:5.2f}",
+    "states": {
+      "medium": 50,
+      "high": 90,
+    }
+  },
+  "memory": {
+    "format": "MEM {}<span color='gray'>%</span>"
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 90,
+    // "format-critical": "{temperatureC}°C {icon}",
+    "format": "{temperatureC}°C {icon}",
+    "format-icons": ["", "", ""]
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}<span color='gray'>%</span>",
+    "format-charging": " {capacity}<span color='gray'>%</span>",
+    "format-plugged": "",
+    "format-alt": "{icon} {time}",
+    "format-time": "{H}:{M:02d}",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "pulseaudio": {
+    "scroll-step": 5, // %, can be a float
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "hdmi": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "pamixer --toggle-mute",
+    "on-click-right": "pavucontrol"
+  },
+  "custom/media": {
+    "exec": "playerctl metadata -f '{{playerName}} {{lc(status)}} «{{title}} - {{artist}}»' -F",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl previous",
+    "on-scroll-down": "playerctl next",
+    "tooltip": false,
+  },
+  "custom/aqi": {
+    "exec": "~/.config/waybar/scripts/aqi",
+    "on-click": "~/.config/waybar/scripts/aqi open-url",
+    "return-type": "json",
+  },
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid DP-2",
+    "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
+    "return-type": "json",
+  },
+}, {
+  "height": 20,
+  "output": "HDMI-A-1",
+  "modules-left": ["custom/aqi", "custom/media"],
+  "modules-center": ["custom/taskmaid"],
+  "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "clock": {
+    "format": "{:%Y-%m-%d %H:%M %A}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "interval": 1,
+  },
+  "cpu": {
+    "format": "CPU {usage:2d}<span color='gray'>%</span> {load:5.2f}",
+    "states": {
+      "medium": 50,
+      "high": 90,
+    }
+  },
+  "memory": {
+    "format": "MEM {}<span color='gray'>%</span>"
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 90,
+    // "format-critical": "{temperatureC}°C {icon}",
+    "format": "{temperatureC}°C {icon}",
+    "format-icons": ["", "", ""]
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}<span color='gray'>%</span>",
+    "format-charging": " {capacity}<span color='gray'>%</span>",
+    "format-plugged": "",
+    "format-alt": "{icon} {time}",
+    "format-time": "{H}:{M:02d}",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "pulseaudio": {
+    "scroll-step": 5, // %, can be a float
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "hdmi": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "pamixer --toggle-mute",
+    "on-click-right": "pavucontrol"
+  },
+  "custom/media": {
+    "exec": "playerctl metadata -f '{{playerName}} {{lc(status)}} «{{title}} - {{artist}}»' -F",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl previous",
+    "on-scroll-down": "playerctl next",
+    "tooltip": false,
+  },
+  "custom/aqi": {
+    "exec": "~/.config/waybar/scripts/aqi",
+    "on-click": "~/.config/waybar/scripts/aqi open-url",
+    "return-type": "json",
+  },
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid HDMI-A-1",
+    "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
+    "return-type": "json",
+  },
+}]

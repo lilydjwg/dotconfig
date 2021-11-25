@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+
+import sys
+import json
+from functools import partial
+import argparse
+
+import dbus
+from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import GLib
+
+data = {"text": "", "tooltip": "", "class": "", "percentage": 0 }
+
+def handle_active(a):
+  title, app_id, output = a
+  data['text'] = title
+  data['tooltip'] = app_id
+  json.dump(data, sys.stdout, ensure_ascii=False)
+  print(flush=True)
+
+def prop_changed(output, _iface, x, _sig):
+  if a := x.get('active'):
+    if a[2] == output:
+      handle_active(a)
+
+def main(output):
+  DBusGMainLoop(set_as_default=True)
+
+  bus = dbus.SessionBus()
+  obj = bus.get_object('me.lilydjwg.taskmaid', '/taskmaid')
+  prop = dbus.Interface(obj, dbus_interface='org.freedesktop.DBus.Properties')
+  a = prop.Get('me.lilydjwg.taskmaid', 'active')
+  if a[2] == output:
+    handle_active(a)
+  prop.connect_to_signal('PropertiesChanged', partial(prop_changed, output))
+
+  loop = GLib.MainLoop()
+  try:
+    loop.run()
+  except KeyboardInterrupt:
+    print()
+    sys.exit(130)
+
+def close_active():
+  bus = dbus.SessionBus()
+  obj = bus.get_object('me.lilydjwg.taskmaid', '/taskmaid')
+  maid = dbus.Interface(obj, dbus_interface='me.lilydjwg.taskmaid')
+  maid.CloseActive()
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser(description='taskmaid integration for waybar')
+  parser.add_argument('output',
+                      help='the output (monitor) this instance is for')
+  args = parser.parse_args()
+
+  if args.output == 'close':
+    close_active()
+  else:
+    main(args.output)
