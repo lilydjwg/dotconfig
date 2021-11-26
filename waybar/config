@@ -74,17 +74,20 @@
     "on-click": "playerctl play-pause",
     "on-scroll-up": "playerctl previous",
     "on-scroll-down": "playerctl next",
+    "escape": true,
     "tooltip": false,
   },
   "custom/aqi": {
     "exec": "~/.config/waybar/scripts/aqi",
     "on-click": "~/.config/waybar/scripts/aqi open-url",
     "return-type": "json",
+    "escape": true,
   },
   "custom/taskmaid": {
     "exec": "~/.config/waybar/scripts/taskmaid eDP-1",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "escape": true,
   },
 }, {
   "height": 20,
@@ -161,17 +164,20 @@
     "on-click": "playerctl play-pause",
     "on-scroll-up": "playerctl previous",
     "on-scroll-down": "playerctl next",
+    "escape": true,
     "tooltip": false,
   },
   "custom/aqi": {
     "exec": "~/.config/waybar/scripts/aqi",
     "on-click": "~/.config/waybar/scripts/aqi open-url",
     "return-type": "json",
+    "escape": true,
   },
   "custom/taskmaid": {
     "exec": "~/.config/waybar/scripts/taskmaid DP-2",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "escape": true,
   },
 }, {
   "height": 20,
@@ -248,16 +254,19 @@
     "on-click": "playerctl play-pause",
     "on-scroll-up": "playerctl previous",
     "on-scroll-down": "playerctl next",
+    "escape": true,
     "tooltip": false,
   },
   "custom/aqi": {
     "exec": "~/.config/waybar/scripts/aqi",
     "on-click": "~/.config/waybar/scripts/aqi open-url",
     "return-type": "json",
+    "escape": true,
   },
   "custom/taskmaid": {
     "exec": "~/.config/waybar/scripts/taskmaid HDMI-A-1",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "escape": true,
   },
 }]
