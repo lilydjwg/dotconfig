@@ -4,7 +4,7 @@
   "output": "eDP-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -89,12 +89,18 @@
     "return-type": "json",
     "escape": true,
   },
+  "custom/netspeed": {
+    "exec": "~/.config/waybar/scripts/netspeed",
+    "return-type": "json",
+    "escape": false,
+    "min-length": 12,
+  },
 }, {
   "height": 20,
   "output": "DP-2",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -178,6 +184,12 @@
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
     "escape": true,
+  },
+  "custom/netspeed": {
+    "exec": "~/.config/waybar/scripts/netspeed",
+    "return-type": "json",
+    "escape": false,
+    "min-length": 12,
   },
 }, {
   "height": 20,

@@ -128,3 +128,7 @@ window#waybar {
 #custom-taskmaid {
   color: #a0a0ff;
 }
+
+#custom-netspeed {
+  font-family: monospace;
+}

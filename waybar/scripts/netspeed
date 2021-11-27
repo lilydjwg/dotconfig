@@ -1,0 +1,79 @@
+#!/usr/bin/python3
+
+import time
+import json
+import sys
+
+from myutils import filesize_ex
+
+def get_data():
+  iface = None
+
+  with open('/proc/net/route') as f:
+    next(f) # skip header
+    for line in f:
+      dev, route, *_ = line.split()
+      if route == '00000000':
+        iface = dev
+        break
+
+  if not iface:
+    return
+
+  iface += ':'
+  with open('/proc/net/dev') as f:
+    next(f)
+    next(f)
+    for line in f:
+      dev, recv, send, *_ = line.split()
+      if dev == iface:
+        return int(recv), int(send)
+
+COLORS = {
+  '': 'gray',
+  'K': '#5798d9',
+  'M': '#57d977',
+}
+
+def format_size(s):
+  f, u = filesize_ex(s)
+  if u:
+    t = f'{f:.1f}{u}'
+  else:
+    t = f'{f}'
+  c = COLORS.get(u, '#9857d9')
+  return f'<span color="{c}">{t:>6}</span>'
+
+def gen_text():
+  last_recv = last_send = None
+
+  while True:
+    data = get_data()
+    time.sleep(1)
+    if not data:
+      last_recv = last_send = None
+      yield '<span color="#992525">(No network)</span>'
+      continue
+
+    recv, send = data
+
+    if last_recv is not None:
+      down = format_size(recv - last_recv)
+      up = format_size(send - last_send)
+      yield f'{down}↓{up}↑'
+    else:
+      yield '(init)'
+
+    last_recv = recv
+    last_send = send
+
+def main():
+  output = {"text": "", "tooltip": "", "class": "", "percentage": 0 }
+  gen = gen_text()
+  while True:
+    output['text'] = next(gen)
+    json.dump(output, sys.stdout, ensure_ascii=False)
+    print(flush=True)
+
+if __name__ == '__main__':
+  main()
