@@ -25,7 +25,9 @@ def get_data():
     next(f)
     next(f)
     for line in f:
-      dev, recv, send, *_ = line.split()
+      data = line.split()
+      dev, recv, *_ = data
+      send = data[9]
       if dev == iface:
         return int(recv), int(send)
 
