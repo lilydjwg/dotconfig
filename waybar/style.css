@@ -107,19 +107,19 @@ window#waybar {
 }
 
 #custom-aqi.green {
-  color: #00e400;
+  color: #009966;
 }
 #custom-aqi.yellow {
-  color: #ffff00;
+  color: #ffde33;
 }
 #custom-aqi.orange {
-  color: #ff7e00;
+  color: #ff9933;
 }
 #custom-aqi.red {
-  color: #ff0000;
+  color: #cc0033;
 }
 #custom-aqi.purple {
-  color: #99004c;
+  color: #660099;
 }
 #custom-aqi.maroon {
   color: #7e0023;
