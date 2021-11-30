@@ -29,9 +29,12 @@ def main(output):
   bus = dbus.SessionBus()
   obj = bus.get_object('me.lilydjwg.taskmaid', '/taskmaid')
   prop = dbus.Interface(obj, dbus_interface='org.freedesktop.DBus.Properties')
-  a = prop.Get('me.lilydjwg.taskmaid', 'active')
-  if a[2] == output:
-    handle_active(a)
+  try:
+    a = prop.Get('me.lilydjwg.taskmaid', 'active')
+    if a[2] == output:
+      handle_active(a)
+  except dbus.exceptions.DBusException:
+    pass
   prop.connect_to_signal('PropertiesChanged', partial(prop_changed, output))
 
   loop = GLib.MainLoop()
