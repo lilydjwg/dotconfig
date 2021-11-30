@@ -15,6 +15,13 @@ window#waybar {
   transition-duration: .5s;
 }
 
+window#waybar.HDMI-A-1 {
+  background-color: #ffffff;
+  color: #000000;
+  border-bottom: 1px solid black;
+  transition-property: none;
+}
+
 .modules-left > widget:first-child > * {
   margin-left: 0;
   padding-left: 0;
@@ -27,6 +34,10 @@ window#waybar {
 
 #clock {
   color: #e6e6fa;
+}
+
+.HDMI-A-1 #clock {
+  color: black;
 }
 
 #battery.warning {
@@ -59,21 +70,21 @@ window#waybar {
 #cpu {
   font-family: monospace;
 }
-
 #cpu, #temperature {
   color: #2ecc71;
 }
-
 #cpu.medium {
   color: #ffb823;
 }
-
 #cpu.high {
   color: #eb4d4b;
 }
-
 #temperature.critical {
   color: #eb4d4b;
+}
+
+.HDMI-A-1 #cpu, .HDMI-A-1 #temperature {
+  color: #1c8046;
 }
 
 #memory {
@@ -101,9 +112,15 @@ window#waybar {
 #idle_inhibitor {
   color: #2d3436;
 }
-
 #idle_inhibitor.activated {
   color: #ecf0f1;
+}
+
+.HDMI-A-1 #idle_inhibitor {
+  color: #ecf0f1;
+}
+.HDMI-A-1 #idle_inhibitor.activated {
+  color: #2d3436;
 }
 
 #custom-aqi.green {
@@ -127,6 +144,9 @@ window#waybar {
 
 #custom-taskmaid {
   color: #a0a0ff;
+}
+.HDMI-A-1 #custom-taskmaid {
+  color: #404066;
 }
 
 #custom-netspeed {
