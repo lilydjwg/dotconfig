@@ -6,11 +6,14 @@ border-radius=4
 height=500
 layer=overlay
 
-[mode=locked]
-layer=top
-
 [urgency=high]
 text-color=#ff5c57ff
 border-color=#ff5c57bb
+
+[mode=locked]
+layer=top
+
+[mode=dnd]
+invisible=1
 
 # vim: se ft=dosini:
