@@ -90,6 +90,7 @@
     "exec": "~/.config/waybar/scripts/taskmaid eDP-1",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "max-length": 1500,
     "escape": true,
   },
   "custom/netspeed": {
@@ -188,6 +189,7 @@
     "exec": "~/.config/waybar/scripts/taskmaid DP-2",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "max-length": 1500,
     "escape": true,
   },
   "custom/netspeed": {
@@ -286,6 +288,7 @@
     "exec": "~/.config/waybar/scripts/taskmaid HDMI-A-1",
     "on-click-middle": "~/.config/waybar/scripts/taskmaid close",
     "return-type": "json",
+    "max-length": 1500,
     "escape": true,
   },
 }]
