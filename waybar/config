@@ -44,6 +44,7 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
+    "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
     "format-icons": ["", "", "", "", ""]
@@ -142,6 +143,7 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
+    "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
     "format-icons": ["", "", "", "", ""]
@@ -239,6 +241,7 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
+    "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
     "format-icons": ["", "", "", "", ""]
