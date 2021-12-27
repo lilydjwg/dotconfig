@@ -55,7 +55,12 @@ def run(config):
   url = ENDPOINT % config
   output = {"text": "", "tooltip": "", "class": "", "percentage": 0 }
   while True:
-    data = fetch_data(url)
+    try:
+      data = fetch_data(url)
+    except httpx.RequestError as e:
+      print(f'Error: {e!r}', file=sys.stderr)
+      time.sleep(11)
+      continue
     output['text'] = f'{data["dominentpol"]} {data["aqi"]}'
     output['percentage'] = data['aqi']
     output['tooltip'] = f'updated at {data["time"]["s"]}'
