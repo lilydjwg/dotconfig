@@ -8,9 +8,67 @@ import time
 
 import toml
 
-ENDPOINT = 'https://api.waqi.info/feed/%(city)s/?token=%(token)s'
-
 client = httpx.Client(http2=True)
+
+class AQI:
+  SITES = {}
+
+  def __init__(self, config):
+    self.config = config
+
+  @classmethod
+  def create(cls, site, config):
+    return cls.SITES[site](config)
+
+  def get_aqi_data(self):
+    raise NotImplementedError
+
+  def get_url(self):
+    raise NotImplementedError
+
+  def __init_subclass__(cls, /, site, **kwargs):
+    super().__init_subclass__(**kwargs)
+    __class__.SITES[site] = cls
+
+class AqiCN(AQI, site='aqicn'):
+  ENDPOINT = 'https://api.waqi.info/feed/%(location)s/?token=%(token)s'
+
+  def get_aqi_data(self):
+    url = self.ENDPOINT % self.config
+    res = client.get(url)
+    j = res.json()
+    data = j['data']
+    return data['dominentpol'], data['aqi'], data['time']['s']
+
+  def get_url(self):
+    return 'https://aqicn.org/city/%(location)s/cn' % self.config
+
+class AirQuality(AQI, site='air-quality'):
+  ENDPOINT = 'https://air-quality.com/place//%(location)s?lang=zh-Hans&standard=aqi_us'
+
+  def get_aqi_data(self):
+    import re
+    from lxml.html import fromstring
+
+    url = self.ENDPOINT % self.config
+    res = client.get(url)
+    doc = fromstring(res.text)
+
+    t = doc.xpath('//div[@class="update-time"]')[0].text_content().strip()
+    c = doc.xpath('//div[@id="chartBox"]/div[@class="title"]')[0].getnext()
+    aqi = int(re.search(r'\d+', c.text).group())
+
+    div = doc.xpath('//div[@class="reading-box"]')[0]
+    names = [x.text for x in div.xpath('//div[@class="name"]')]
+    ratios = [x.get('style').split('*')[1].split(')')[0] for x in div.xpath('//div[@class="ratio-bar"]')]
+    ratios = [(i, float(x)) for i, x in enumerate(ratios)]
+    max_ratio_idx = max(ratios, key=lambda x: x[1])[0]
+    dom = names[max_ratio_idx].lower()
+
+    return dom, aqi, t
+
+  def get_url(self):
+    return self.ENDPOINT % self.config
 
 def color(aqi):
   if aqi <= 50:
@@ -39,40 +97,37 @@ def main():
   with open(os.path.join(mydir, 'secrets.toml')) as f:
     config = toml.load(f)['aqi']
 
+  site = config.get('site', 'aqicn')
+  aqi = AQI.create(site, config)
+
   if len(sys.argv) == 2 and sys.argv[1] == 'open-url':
-    url = 'https://aqicn.org/city/%s/cn' % config['city']
+    url = aqi.get_url()
     import subprocess
     subprocess.check_call(['xdg-open', url])
     return
 
   if len(sys.argv) == 1:
-    run(config)
+    run(aqi)
     return
 
   sys.exit('bad argument')
 
-def run(config):
-  url = ENDPOINT % config
+def run(aqi):
   output = {"text": "", "tooltip": "", "class": "", "percentage": 0 }
   while True:
     try:
-      data = fetch_data(url)
+      dom, aqi, t = aqi.get_aqi_data()
     except httpx.RequestError as e:
       print(f'Error: {e!r}', file=sys.stderr)
       time.sleep(11)
       continue
-    output['text'] = f'{data["dominentpol"]} {data["aqi"]}'
-    output['percentage'] = data['aqi']
-    output['tooltip'] = f'updated at {data["time"]["s"]}'
-    output['class'] = color(data['aqi'])
+    output['text'] = f'{dom} {aqi}'
+    output['percentage'] = aqi
+    output['tooltip'] = f'updated at {t}'
+    output['class'] = color(aqi)
     json.dump(output, sys.stdout)
     print(flush=True)
     wait_some_time()
-
-def fetch_data(url):
-  res = client.get(url)
-  j = res.json()
-  return j['data']
 
 if __name__ == '__main__':
   main()
