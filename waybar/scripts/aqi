@@ -112,11 +112,11 @@ def main():
 
   sys.exit('bad argument')
 
-def run(aqi):
+def run(aqio):
   output = {"text": "", "tooltip": "", "class": "", "percentage": 0 }
   while True:
     try:
-      dom, aqi, t = aqi.get_aqi_data()
+      dom, aqi, t = aqio.get_aqi_data()
     except httpx.RequestError as e:
       print(f'Error: {e!r}', file=sys.stderr)
       time.sleep(11)
