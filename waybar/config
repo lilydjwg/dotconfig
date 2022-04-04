@@ -14,7 +14,7 @@
   },
   "clock": {
     "format": "{:%Y-%m-%d %H:%M:%S %A}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
   "cpu": {
@@ -45,6 +45,7 @@
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
     "format-full": "",
+    "format-not-charging": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
     "format-icons": ["", "", "", "", ""]
@@ -115,7 +116,7 @@
   },
   "clock": {
     "format": "{:%Y-%m-%d %H:%M:%S %A}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
   "cpu": {
@@ -145,6 +146,7 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
+    "format-not-charging": "",
     "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
@@ -215,7 +217,7 @@
   },
   "clock": {
     "format": "{:%Y-%m-%d %H:%M %A}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
   "cpu": {
@@ -245,6 +247,7 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
+    "format-not-charging": "",
     "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
