@@ -4,6 +4,8 @@ text-color=#333333ff
 border-color=#b3b3ffdd
 border-radius=4
 height=500
+# avoid covering firefox's tabs and buttons
+outer-margin=75,0,0,0
 layer=overlay
 
 [urgency=high]
