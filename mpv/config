@@ -1,10 +1,14 @@
 [default]
 sub-codepage = cp936
+slang = zho,eng,jpn
 demuxer-readahead-secs = 20
 
 hwdec = auto
 # this will cause broken cover images
 # hwdec-codecs = all
+
+scale = ewa_lanczossharp
+dscale = mitchell
 
 ytdl-raw-options=yes-playlist=
 # mpv will by default pass "bestvideo+bestaudio/best", which selects h264 over vp9 because of its larger size
@@ -13,3 +17,5 @@ ytdl-format=(bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840])+bestau
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 
 demuxer-force-retry-on-eof = yes
+
+# vim: se ft=dosini:
