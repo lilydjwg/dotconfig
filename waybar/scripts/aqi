@@ -117,7 +117,7 @@ def run(aqio):
   while True:
     try:
       dom, aqi, t = aqio.get_aqi_data()
-    except httpx.RequestError as e:
+    except Exception as e:
       print(f'Error: {e!r}', file=sys.stderr)
       time.sleep(11)
       continue
