@@ -1,8 +1,8 @@
 [default]
 sub-codepage = cp936
-slang = zho,eng,jpn
+slang = zho,zh,chi,eng,en,jpn,ja
 demuxer-readahead-secs = 20
-
+ao = pulse
 hwdec = auto
 # this will cause broken cover images
 # hwdec-codecs = all
