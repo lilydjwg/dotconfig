@@ -27,7 +27,7 @@ def main(output):
   DBusGMainLoop(set_as_default=True)
 
   bus = dbus.SessionBus()
-  obj = bus.get_object('me.lilydjwg.taskmaid', '/taskmaid')
+  obj = bus.get_object('me.lilydjwg.taskmaid', '/taskmaid', follow_name_owner_changes=True)
   prop = dbus.Interface(obj, dbus_interface='org.freedesktop.DBus.Properties')
   try:
     a = prop.Get('me.lilydjwg.taskmaid', 'active')
