@@ -1,13 +1,18 @@
 [default]
 sub-codepage = cp936
-slang = zho,zh,chi,eng,en,jpn,ja
+slang = zh_CN,zho,chi,zh,zh_TW,eng,en,jpn,ja
 demuxer-readahead-secs = 20
 ao = pulse
 hwdec = auto
 # this will cause broken cover images
 # hwdec-codecs = all
+# move subtitles to margins
+sub-ass-force-margins = yes
 
-scale = ewa_lanczossharp
+# use too much GPU
+# scale = ewa_lanczossharp
+scale = spline36
+# scale = nearest
 dscale = mitchell
 
 ytdl-raw-options=yes-playlist=
