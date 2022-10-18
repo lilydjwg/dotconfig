@@ -21,6 +21,12 @@ window#waybar.HDMI-A-1 {
   transition-property: none;
 }
 
+button:hover {
+  background: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  box-shadow: inherit;
+}
+
 .modules-left > widget:first-child > * {
   margin-left: 0;
   padding-left: 0;
