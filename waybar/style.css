@@ -20,8 +20,11 @@ button {
 
 window#waybar.HDMI-A-1 {
   background-color: #ffffff;
-  color: #000000;
   transition-property: none;
+}
+
+window#waybar.HDMI-A-1 button {
+  color: #000000;
 }
 
 button:hover {
