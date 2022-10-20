@@ -10,9 +10,12 @@ widget > * {
 
 window#waybar {
   background-color: #000000;
-  color: #8080cc;
   transition-property: background-color;
   transition-duration: .5s;
+}
+
+button {
+  color: #8080cc;
 }
 
 window#waybar.HDMI-A-1 {
