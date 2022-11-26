@@ -17,11 +17,8 @@ window#waybar {
 
 window#waybar.HDMI-A-1 {
   background-color: #ffffff;
-  transition-property: none;
-}
-
-window#waybar.HDMI-A-1 button {
   color: #000000;
+  transition-property: none;
 }
 
 button:hover {
