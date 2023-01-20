@@ -68,6 +68,7 @@
       "hdmi": "",
       "default": ["", "", ""]
     },
+    "ignored-sinks": ["Easy Effects Sink"],
     "on-click": "pamixer --toggle-mute",
     "on-click-right": "pavucontrol"
   },
@@ -170,6 +171,7 @@
       "hdmi": "",
       "default": ["", "", ""]
     },
+    "ignored-sinks": ["Easy Effects Sink"],
     "on-click": "pamixer --toggle-mute",
     "on-click-right": "pavucontrol"
   },
@@ -271,6 +273,7 @@
       "hdmi": "",
       "default": ["", "", ""]
     },
+    "ignored-sinks": ["Easy Effects Sink"],
     "on-click": "pamixer --toggle-mute",
     "on-click-right": "pavucontrol"
   },
