@@ -10,6 +10,7 @@ vo = gpu-next,
 sub-ass-force-margins = yes
 # this takes a lot of CPU on the terminal
 # osd-fractions = yes
+osc = no
 
 # use too much GPU
 # scale = ewa_lanczossharp
