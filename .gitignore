@@ -4,8 +4,13 @@
 !/imv
 !/lf
 !/mako
+
 !/mpv
 /mpv/*/
+!/mpv/script-opts
+!/mpv/scripts
+/mpv/scripts/*.so
+
 !/swaylock
 !/waybar
 !/wayfire.ini
