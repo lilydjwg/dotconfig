@@ -12,9 +12,6 @@ sub-ass-force-margins = yes
 # osd-fractions = yes
 osc = no
 
-# use too much GPU
-# scale = ewa_lanczossharp
-# scale = spline36
 scale = nearest
 dscale = mitchell
 
@@ -25,6 +22,20 @@ ytdl-format=(bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840][vcodec~
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 
 demuxer-force-retry-on-eof = yes
+
+[lilyboudoir]
+# use too much GPU that lilyforest cannot afford
+profile-desc = High GPU
+profile-cond = p['user-data/hostname'] == "lilyboudoir"
+
+scale = ewa_lanczos
+dscale = spline36
+
+interpolation = yes
+video-sync = display-resample
+tscale = linear
+
+ytdl-format=(bestvideo[height<=3840][vcodec=av01.0.08M.08]/bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840][vcodec~="^avc"]/bestvideo[height<=3840])+bestaudio
 
 [bilibili]
 profile-desc = Bilibili videos
