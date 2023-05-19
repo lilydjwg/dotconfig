@@ -23,6 +23,12 @@ script-opts=ytdl_hook-ytdl_path=yt-dlp
 
 demuxer-force-retry-on-eof = yes
 
+[IPCam]
+# video stuck with video-sync = display-resample
+profile-desc = IPCam
+profile-cond = path == "http://phone_xz2c:8080/video"
+video-sync = audio
+
 [lilyboudoir]
 # use too much GPU that lilyforest cannot afford
 profile-desc = High GPU
