@@ -2,7 +2,7 @@
 sub-codepage = cp936
 slang = zh_CN,zho,chi,zh,zh_TW,eng,en,jpn,ja
 demuxer-readahead-secs = 20
-hwdec = auto
+hwdec = vaapi
 vo = gpu-next,
 # this will cause broken cover images
 # hwdec-codecs = all
@@ -17,7 +17,7 @@ dscale = mitchell
 
 ytdl-raw-options=yes-playlist=
 # mpv will by default pass "bestvideo+bestaudio/best", which selects h264 over vp9 because of its larger size
-ytdl-format=(bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840][vcodec~="^avc"]/bestvideo[height<=3840])+bestaudio
+ytdl-format=(bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio
 # use yt-dlp
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 
@@ -41,11 +41,23 @@ interpolation = yes
 video-sync = display-resample
 tscale = linear
 
-ytdl-format=(bestvideo[height<=3840][vcodec=av01.0.08M.08]/bestvideo[height<=3840][vcodec=vp9]/bestvideo[height<=3840][vcodec~="^avc"]/bestvideo[height<=3840])+bestaudio
+ytdl-format=(bestvideo[height<=3840][vcodec^=av01]/bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio
+
+[twitch-live]
+profile-desc = twitch live videos
+profile-cond = path:match("https://www.twitch.tv/")~=nil
+profile-restore = copy
+ytdl-format = 720p60__source_
+
+[bilibili-live]
+profile-desc = Bilibili live videos
+profile-cond = path:match("https://live.bilibili.com")~=nil
+profile-restore = copy
+ytdl-format = source-0/source
 
 [bilibili]
 profile-desc = Bilibili videos
-profile-cond = path:match("https://www.bilibili.com")~=nil
+profile-cond = path:match("https://www.bilibili.com")~=nil or path:match("https://bilibili.com")~=nil
 profile-restore = copy
 referrer = https://www.bilibili.com/
 ytdl-raw-options = cookies-from-browser=firefox:nightly::Bilibili
