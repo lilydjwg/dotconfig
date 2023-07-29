@@ -1,0 +1,11 @@
+# marked as watched about 10% at start of download
+# --mark-watched
+# --cookies-from-browser firefox:nightly
+# unrestricted "bestvideo" will select h264 over vp9 because of its larger size
+--format=(bestvideo[height<=3840][vcodec^=av01]/bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio
+--socket-timeout=10
+--add-metadata
+--prefer-free-formats
+
+--all-subs
+--embed-subs
