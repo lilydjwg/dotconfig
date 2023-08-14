@@ -17,7 +17,7 @@ dscale = mitchell
 
 ytdl-raw-options=yes-playlist=
 # mpv will by default pass "bestvideo+bestaudio/best", which selects h264 over vp9 because of its larger size
-ytdl-format=(bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio
+ytdl-format=(bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio/(best[height<=3840][vcodec^=vp]/best[height<=3840])
 # use yt-dlp
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 
@@ -41,7 +41,7 @@ interpolation = yes
 video-sync = display-resample
 tscale = linear
 
-ytdl-format=(bestvideo[height<=3840][vcodec^=av01]/bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio
+ytdl-format=(bestvideo[height<=3840][vcodec^=av01]/bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio/(best[height<=3840][vcodec^=av01]/best[height<=3840][vcodec^=vp]/best[height<=3840])
 
 [twitch-live]
 profile-desc = twitch live videos
