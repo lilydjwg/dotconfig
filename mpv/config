@@ -53,7 +53,8 @@ ytdl-format = 720p60__source_
 profile-desc = Bilibili live videos
 profile-cond = path:match("https://live.bilibili.com")~=nil
 profile-restore = copy
-ytdl-format = source-0/source
+# mpegts hevc 原画 / flv avc 原画 / ...
+ytdl-format = source-7/source-0/source
 
 [bilibili]
 profile-desc = Bilibili videos
