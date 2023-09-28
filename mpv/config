@@ -11,6 +11,7 @@ sub-ass-force-margins = yes
 # this takes a lot of CPU on the terminal
 # osd-fractions = yes
 osc = no
+screenshot-format = webp
 
 scale = nearest
 dscale = mitchell
@@ -20,8 +21,6 @@ ytdl-raw-options=yes-playlist=
 ytdl-format=(bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio/(best[height<=3840][vcodec^=vp]/best[height<=3840])
 # use yt-dlp
 script-opts=ytdl_hook-ytdl_path=yt-dlp
-
-demuxer-force-retry-on-eof = yes
 
 [IPCam]
 # video stuck with video-sync = display-resample
