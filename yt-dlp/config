@@ -3,7 +3,7 @@
 # --cookies-from-browser firefox:nightly
 # unrestricted "bestvideo" will select h264 over vp9 because of its larger size
 # bilibili has only best not bestvideo+bestaudio
---format=(bestvideo[height<=3840][vcodec^=av01]/bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio/(best[height<=3840][vcodec^=av01]/best[height<=3840][vcodec^=vp]/best[height<=3840])
+--format=(bestvideo[height<=3840][vcodec^=vp]/bestvideo[height<=3840])+bestaudio/(best[height<=3840][vcodec^=vp]/best[height<=3840])
 --socket-timeout=10
 --add-metadata
 --prefer-free-formats
