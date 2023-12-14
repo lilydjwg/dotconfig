@@ -1,6 +1,8 @@
 [default]
 sub-codepage = cp936
 slang = zh_CN,zho,chi,zh,zh_TW,eng,en,jpn,ja
+sub-pos = 95
+sub-font-size = 30
 demuxer-readahead-secs = 20
 hwdec = vaapi
 vo = gpu-next,
