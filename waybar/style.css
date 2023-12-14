@@ -157,3 +157,8 @@ button:hover {
 #custom-netspeed {
   font-family: monospace;
 }
+
+#custom-cpu {
+  font-family: monospace;
+  color: #bcbccc;
+}
