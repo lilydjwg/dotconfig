@@ -1,3 +1,4 @@
+mp.set_property("osc", "no")
 local assdraw = require 'mp.assdraw'
 local msg = require 'mp.msg'
 local opt = require 'mp.options'
@@ -94,6 +95,11 @@ local osc_styles = {
     wcBar = "{\\1c&H000000}",
 }
 
+local function create_osd_overlay(...)
+    if not mp.create_osd_overlay then return end
+    return mp.create_osd_overlay(...)
+end
+
 -- internal states, do not touch
 local state = {
     showtime,                               -- time of last invocation (last mouse move)
@@ -122,11 +128,12 @@ local state = {
     enabled = true,
     input_enabled = true,
     showhide_enabled = false,
+    windowcontrols_buttons = false,
     dmx_cache = 0,
     using_video_margins = false,
     border = true,
     maximized = false,
-    osd = mp.create_osd_overlay("ass-events"),
+    osd = create_osd_overlay("ass-events"),
     chapter_list = {},                      -- sorted by time
 }
 
@@ -163,6 +170,8 @@ function set_osd(res_x, res_y, text)
     state.osd.z = 1000
     state.osd:update()
 end
+
+set_osd = state.osd and set_osd or mp.set_osd_ass
 
 local margins_opts = {
     {"l", "video-margin-ratio-left"},
@@ -325,19 +334,102 @@ function ass_append_alpha(ass, alpha, modifier)
                ar[1], ar[2], ar[3], ar[4]))
 end
 
+local c = 0.551915024494 -- circle approximation
+
+function hexagon_cw(ass, x0, y0, x1, y1, r1, r2)
+    if r2 == nil then
+        r2 = r1
+    end
+    ass:move_to(x0 + r1, y0)
+    if x0 ~= x1 then
+        ass:line_to(x1 - r2, y0)
+    end
+    ass:line_to(x1, y0 + r2)
+    if x0 ~= x1 then
+        ass:line_to(x1 - r2, y1)
+    end
+    ass:line_to(x0 + r1, y1)
+    ass:line_to(x0, y0 + r1)
+end
+
+function hexagon_ccw(ass, x0, y0, x1, y1, r1, r2)
+    if r2 == nil then
+        r2 = r1
+    end
+    ass:move_to(x0 + r1, y0)
+    ass:line_to(x0, y0 + r1)
+    ass:line_to(x0 + r1, y1)
+    if x0 ~= x1 then
+        ass:line_to(x1 - r2, y1)
+    end
+    ass:line_to(x1, y0 + r2)
+    if x0 ~= x1 then
+        ass:line_to(x1 - r2, y0)
+    end
+end
+
+function round_rect_cw(ass, x0, y0, x1, y1, r1, r2)
+    if r2 == nil then
+        r2 = r1
+    end
+    local c1 = c * r1 -- circle approximation
+    local c2 = c * r2 -- circle approximation
+    ass:move_to(x0 + r1, y0)
+    ass:line_to(x1 - r2, y0) -- top line
+    if r2 > 0 then
+        ass:bezier_curve(x1 - r2 + c2, y0, x1, y0 + r2 - c2, x1, y0 + r2) -- top right corner
+    end
+    ass:line_to(x1, y1 - r2) -- right line
+    if r2 > 0 then
+        ass:bezier_curve(x1, y1 - r2 + c2, x1 - r2 + c2, y1, x1 - r2, y1) -- bottom right corner
+    end
+    ass:line_to(x0 + r1, y1) -- bottom line
+    if r1 > 0 then
+        ass:bezier_curve(x0 + r1 - c1, y1, x0, y1 - r1 + c1, x0, y1 - r1) -- bottom left corner
+    end
+    ass:line_to(x0, y0 + r1) -- left line
+    if r1 > 0 then
+        ass:bezier_curve(x0, y0 + r1 - c1, x0 + r1 - c1, y0, x0 + r1, y0) -- top left corner
+    end
+end
+
+function round_rect_ccw(ass, x0, y0, x1, y1, r1, r2)
+    if r2 == nil then
+        r2 = r1
+    end
+    local c1 = c * r1 -- circle approximation
+    local c2 = c * r2 -- circle approximation
+    ass:move_to(x0 + r1, y0)
+    if r1 > 0 then
+        ass:bezier_curve(x0 + r1 - c1, y0, x0, y0 + r1 - c1, x0, y0 + r1) -- top left corner
+    end
+    ass:line_to(x0, y1 - r1) -- left line
+    if r1 > 0 then
+        ass:bezier_curve(x0, y1 - r1 + c1, x0 + r1 - c1, y1, x0 + r1, y1) -- bottom left corner
+    end
+    ass:line_to(x1 - r2, y1) -- bottom line
+    if r2 > 0 then
+        ass:bezier_curve(x1 - r2 + c2, y1, x1, y1 - r2 + c2, x1, y1 - r2) -- bottom right corner
+    end
+    ass:line_to(x1, y0 + r2) -- right line
+    if r2 > 0 then
+        ass:bezier_curve(x1, y0 + r2 - c2, x1 - r2 + c2, y0, x1 - r2, y0) -- top right corner
+    end
+end
+
 function ass_draw_rr_h_cw(ass, x0, y0, x1, y1, r1, hexagon, r2)
     if hexagon then
-        ass:hexagon_cw(x0, y0, x1, y1, r1, r2)
+        hexagon_cw(ass, x0, y0, x1, y1, r1, r2)
     else
-        ass:round_rect_cw(x0, y0, x1, y1, r1, r2)
+        round_rect_cw(ass, x0, y0, x1, y1, r1, r2)
     end
 end
 
 function ass_draw_rr_h_ccw(ass, x0, y0, x1, y1, r1, hexagon, r2)
     if hexagon then
-        ass:hexagon_ccw(x0, y0, x1, y1, r1, r2)
+        hexagon_ccw(ass, x0, y0, x1, y1, r1, r2)
     else
-        ass:round_rect_ccw(x0, y0, x1, y1, r1, r2)
+        round_rect_ccw(ass, x0, y0, x1, y1, r1, r2)
     end
 end
 
@@ -457,7 +549,7 @@ local elements = {}
 
 function prepare_elements()
 
-    -- remove elements without layout or invisble
+    -- remove elements without layout or invisible
     local elements2 = {}
     for n, element in pairs(elements) do
         if not (element.layout == nil) and (element.visible) then
@@ -859,6 +951,7 @@ function render_elements(master_ass)
 
                             elem_ass:new_event()
                             elem_ass:pos(thumb_x * r_w, thumb_y * r_h)
+                            elem_ass:an(7)
                             elem_ass:append(osc_styles.timePosBar)
                             elem_ass:append("{\\1a&H20&}")
                             elem_ass:draw_start()
@@ -2236,13 +2329,21 @@ function update_margins()
         reset_margins()
     end
 
+    if mp.del_property then
+    mp.set_property_native("user-data/osc/margins", margins)
+    else
     utils.shared_script_property_set("osc-margins",
         string.format("%f,%f,%f,%f", margins.l, margins.r, margins.t, margins.b))
+    end
 end
 
 function shutdown()
     reset_margins()
+    if mp.del_property then
+    mp.del_property("user-data/osc")
+    else
     utils.shared_script_property_set("osc-margins", nil)
+    end
 end
 
 --
@@ -2267,6 +2368,9 @@ end
 
 function hide_osc()
     msg.trace("hide_osc")
+    if thumbfast.width ~= 0 and thumbfast.height ~= 0 then
+        mp.commandv("script-message-to", "thumbfast", "clear")
+    end
     if not state.enabled then
         -- typically hide happens at render() from tick(), but now tick() is
         -- no-op and won't render again to remove the osc, so do that manually.
@@ -2344,8 +2448,12 @@ end
 
 function render_wipe()
     msg.trace("render_wipe()")
+    if state.osd then
     state.osd.data = "" -- allows set_osd to immediately update on enable
     state.osd:remove()
+    else
+    set_osd(0, 0, "{}")
+    end
 end
 
 function render()
@@ -2366,7 +2474,7 @@ function render()
 
     -- init management
     if state.active_element then
-        -- mouse is held down on some element - keep ticking and igore initReq
+        -- mouse is held down on some element - keep ticking and ignore initReq
         -- till it's released, or else the mouse-up (click) will misbehave or
         -- get ignored. that's because osc_init() recreates the osc elements,
         -- but mouse handling depends on the elements staying unmodified
@@ -2417,14 +2525,14 @@ function render()
 
     --mouse show/hide area
     for k,cords in pairs(osc_param.areas["showhide"]) do
-        set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "showhide")
+        set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "thumbfast-osc-showhide")
     end
     if osc_param.areas["showhide_wc"] then
         for k,cords in pairs(osc_param.areas["showhide_wc"]) do
-            set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "showhide_wc")
+            set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "thumbfast-osc-showhide_wc")
         end
     else
-        set_virt_mouse_area(0, 0, 0, 0, "showhide_wc")
+        set_virt_mouse_area(0, 0, 0, 0, "thumbfast-osc-showhide_wc")
     end
     do_enable_keybindings()
 
@@ -2433,13 +2541,13 @@ function render()
 
     for _,cords in ipairs(osc_param.areas["input"]) do
         if state.osc_visible then -- activate only when OSC is actually visible
-            set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "input")
+            set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "thumbfast-osc-input")
         end
         if state.osc_visible ~= state.input_enabled then
             if state.osc_visible then
-                mp.enable_key_bindings("input")
+                mp.enable_key_bindings("thumbfast-osc-input")
             else
-                mp.disable_key_bindings("input")
+                mp.disable_key_bindings("thumbfast-osc-input")
             end
             state.input_enabled = state.osc_visible
         end
@@ -2452,10 +2560,15 @@ function render()
     if osc_param.areas["window-controls"] then
         for _,cords in ipairs(osc_param.areas["window-controls"]) do
             if state.osc_visible then -- activate only when OSC is actually visible
-                set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "window-controls")
-                mp.enable_key_bindings("window-controls")
-            else
-                mp.disable_key_bindings("window-controls")
+                set_virt_mouse_area(cords.x1, cords.y1, cords.x2, cords.y2, "thumbfast-osc-window-controls")
+            end
+            if state.osc_visible ~= state.windowcontrols_buttons then
+                if state.osc_visible then
+                    mp.enable_key_bindings("thumbfast-osc-window-controls")
+                else
+                    mp.disable_key_bindings("thumbfast-osc-window-controls")
+                end
+                state.windowcontrols_buttons = state.osc_visible
             end
 
             if (mouse_hit_coords(cords.x1, cords.y1, cords.x2, cords.y2)) then
@@ -2630,6 +2743,9 @@ function tick()
         -- render idle message
         msg.trace("idle message")
         local _, _, display_aspect = mp.get_osd_size()
+        if display_aspect == 0 then
+            return
+        end
         local display_h = 360
         local display_w = display_h * display_aspect
         -- logo is rendered at 2^(6-1) = 32 times resolution with size 1800x1800
@@ -2662,8 +2778,8 @@ function tick()
         set_osd(display_w, display_h, ass.text)
 
         if state.showhide_enabled then
-            mp.disable_key_bindings("showhide")
-            mp.disable_key_bindings("showhide_wc")
+            mp.disable_key_bindings("thumbfast-osc-showhide")
+            mp.disable_key_bindings("thumbfast-osc-showhide_wc")
             state.showhide_enabled = false
         end
 
@@ -2698,8 +2814,8 @@ end
 function do_enable_keybindings()
     if state.enabled then
         if not state.showhide_enabled then
-            mp.enable_key_bindings("showhide", "allow-vo-dragging+allow-hide-cursor")
-            mp.enable_key_bindings("showhide_wc", "allow-vo-dragging+allow-hide-cursor")
+            mp.enable_key_bindings("thumbfast-osc-showhide", "allow-vo-dragging+allow-hide-cursor")
+            mp.enable_key_bindings("thumbfast-osc-showhide_wc", "allow-vo-dragging+allow-hide-cursor")
         end
         state.showhide_enabled = true
     end
@@ -2712,8 +2828,8 @@ function enable_osc(enable)
     else
         hide_osc() -- acts immediately when state.enabled == false
         if state.showhide_enabled then
-            mp.disable_key_bindings("showhide")
-            mp.disable_key_bindings("showhide_wc")
+            mp.disable_key_bindings("thumbfast-osc-showhide")
+            mp.disable_key_bindings("thumbfast-osc-showhide_wc")
         end
         state.showhide_enabled = false
     end
@@ -2746,11 +2862,6 @@ update_duration_watch()
 
 mp.register_event("shutdown", shutdown)
 mp.register_event("start-file", request_init)
-mp.observe_property("osc", "bool", function(name, value)
-    if value == true then
-        mp.set_property("osc", "no")
-    end
-end)
 mp.observe_property("track-list", nil, request_init)
 mp.observe_property("playlist", nil, request_init)
 mp.observe_property("chapter-list", "native", function(_, list)
@@ -2819,11 +2930,11 @@ end)
 mp.set_key_bindings({
     {"mouse_move",              function(e) process_event("mouse_move", nil) end},
     {"mouse_leave",             mouse_leave},
-}, "showhide", "force")
+}, "thumbfast-osc-showhide", "force")
 mp.set_key_bindings({
     {"mouse_move",              function(e) process_event("mouse_move", nil) end},
     {"mouse_leave",             mouse_leave},
-}, "showhide_wc", "force")
+}, "thumbfast-osc-showhide_wc", "force")
 do_enable_keybindings()
 
 --mouse input bindings
@@ -2842,14 +2953,14 @@ mp.set_key_bindings({
     {"mbtn_left_dbl",       "ignore"},
     {"shift+mbtn_left_dbl", "ignore"},
     {"mbtn_right_dbl",      "ignore"},
-}, "input", "force")
-mp.enable_key_bindings("input")
+}, "thumbfast-osc-input", "force")
+mp.enable_key_bindings("thumbfast-osc-input")
 
 mp.set_key_bindings({
     {"mbtn_left",           function(e) process_event("mbtn_left", "up") end,
                             function(e) process_event("mbtn_left", "down")  end},
-}, "window-controls", "force")
-mp.enable_key_bindings("window-controls")
+}, "thumbfast-osc-window-controls", "force")
+mp.enable_key_bindings("thumbfast-osc-window-controls")
 
 function get_hidetimeout()
     if user_opts.visibility == "always" then
@@ -2895,7 +3006,11 @@ function visibility_mode(mode, no_osd)
     end
 
     user_opts.visibility = mode
+    if mp.del_property then
+    mp.set_property_native("user-data/osc/visibility", mode)
+    else
     utils.shared_script_property_set("osc-visibility", mode)
+    end
 
     if not no_osd and tonumber(mp.get_property("osd-level")) >= 1 then
         mp.osd_message("OSC visibility: " .. mode)
@@ -2904,8 +3019,8 @@ function visibility_mode(mode, no_osd)
     -- Reset the input state on a mode change. The input state will be
     -- recalculated on the next render cycle, except in 'never' mode where it
     -- will just stay disabled.
-    mp.disable_key_bindings("input")
-    mp.disable_key_bindings("window-controls")
+    mp.disable_key_bindings("thumbfast-osc-input")
+    mp.disable_key_bindings("thumbfast-osc-window-controls")
     state.input_enabled = false
 
     update_margins()
@@ -2927,7 +3042,11 @@ function idlescreen_visibility(mode, no_osd)
         user_opts.idlescreen = false
     end
 
+    if mp.del_property then
+    mp.set_property_native("user-data/osc/idlescreen", user_opts.idlescreen)
+    else
     utils.shared_script_property_set("osc-idlescreen", mode)
+    end
 
     if not no_osd and tonumber(mp.get_property("osd-level")) >= 1 then
         mp.osd_message("OSC logo visibility: " .. tostring(mode))
@@ -2951,5 +3070,5 @@ mp.register_script_message("thumbfast-info", function(json)
     end
 end)
 
-set_virt_mouse_area(0, 0, 0, 0, "input")
-set_virt_mouse_area(0, 0, 0, 0, "window-controls")
+set_virt_mouse_area(0, 0, 0, 0, "thumbfast-osc-input")
+set_virt_mouse_area(0, 0, 0, 0, "thumbfast-osc-window-controls")
