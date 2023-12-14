@@ -1,0 +1,49 @@
+working_directory = "/home/lilydjwg/tmpfs"
+
+[colors.bright]
+black = "0x555555"
+blue = "0x5555ff"
+cyan = "0x55ffff"
+green = "0x55ff55"
+magenta = "0xff55ff"
+red = "0xff5555"
+white = "0xffffff"
+yellow = "0xffff55"
+
+[colors.cursor]
+cursor = "0xffffff"
+text = "0x000000"
+
+[colors.normal]
+black = "0x000000"
+blue = "0x0057bf"
+cyan = "0x00aaaa"
+green = "0x00aa00"
+magenta = "0xaa00aa"
+red = "0xaa0000"
+white = "0xaaaaaa"
+yellow = "0xaa5500"
+
+[colors.primary]
+background = "0x222222"
+foreground = "0xe7e0f3"
+
+[font]
+size = 13
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+[hints.enabled.binding]
+key = "U"
+mods = "Control|Shift"
+
+[hints.enabled.mouse]
+enabled = true
+mods = "None"
+
+[mouse]
+hide_when_typing = true
