@@ -117,17 +117,16 @@ def run(aqio):
   while True:
     try:
       dom, aqi, t = aqio.get_aqi_data()
+      output['text'] = f'{dom} {aqi}'
+      output['percentage'] = aqi
+      output['tooltip'] = f'updated at {t}'
+      output['class'] = color(aqi)
+      json.dump(output, sys.stdout)
+      print(flush=True)
+      wait_some_time()
     except Exception as e:
       print(f'Error: {e!r}', file=sys.stderr)
       time.sleep(11)
-      continue
-    output['text'] = f'{dom} {aqi}'
-    output['percentage'] = aqi
-    output['tooltip'] = f'updated at {t}'
-    output['class'] = color(aqi)
-    json.dump(output, sys.stdout)
-    print(flush=True)
-    wait_some_time()
 
 if __name__ == '__main__':
   main()
