@@ -4,7 +4,7 @@
   "output": "eDP-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "custom/netspeed", "cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -17,19 +17,12 @@
     "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
-  "cpu": {
-    "format": "CPU {usage:2d}<span color='gray'>%</span> {load:5.2f}",
-    "states": {
-      "medium": 50,
-      "high": 90,
-    }
-  },
   "memory": {
     "format": "MEM {}<span color='gray'>%</span>"
   },
   "temperature": {
     // "thermal-zone": 2,
-    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
     "critical-threshold": 90,
     // "format-critical": "{temperatureC}°C {icon}",
     "format": "{temperatureC}°C {icon}",
@@ -44,8 +37,8 @@
     "format": "{icon} {capacity}<span color='gray'>%</span>",
     "format-charging": " {capacity}<span color='gray'>%</span>",
     "format-plugged": "",
-    "format-full": "",
     "format-not-charging": "",
+    "format-full": "",
     "format-alt": "{icon} {time}",
     "format-time": "{H}:{M:02d}",
     "format-icons": ["", "", "", "", ""]
@@ -101,6 +94,11 @@
     "return-type": "json",
     "escape": false,
     "min-length": 12,
+  },
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/cpu-psi/cpu-psi",
+    "return-type": "json",
+    "escape": false,
   },
 }, {
   "height": 20,
@@ -174,6 +172,7 @@
     "on-click-middle": "playerctl stop",
     "on-scroll-up": "playerctl previous",
     "on-scroll-down": "playerctl next",
+    // indicate this can be truncated
     "max-length": 500,
     "escape": true,
     "tooltip": false,
