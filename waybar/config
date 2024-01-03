@@ -207,7 +207,7 @@
   "output": "HDMI-A-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "custom/cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {

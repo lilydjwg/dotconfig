@@ -84,8 +84,8 @@ fn main() {
         red: 90.0 * cpu_count,
       },
       load = Colored { value: load, orange: 0.5 * cpu_count, red: 0.9 * cpu_count },
-      psi_cpu = Colored { value: psi_cpu, orange: 10.0, red: 90.0 },
-      psi_mem = Colored { value: psi_mem, orange: 10.0, red: 90.0 },
+      psi_cpu = Colored { value: psi_cpu, orange: 1.0, red: 5.0 },
+      psi_mem = Colored { value: psi_mem, orange: 1.0, red: 5.0 },
       psi_io = Colored { value: psi_io, orange: 20.0, red: 90.0 },
     );
     let output = format!(
