@@ -27,7 +27,7 @@ fn get_cpu_time() -> CpuInfo {
     .map(|i| i.parse().unwrap())
     .collect();
   CpuInfo {
-    idle: numbers[3],
+    idle: numbers[3] + numbers[4],
     total: numbers.iter().sum(),
   }
 }
