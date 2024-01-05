@@ -37,6 +37,12 @@ COLORS = {
   'M': '#57d977',
 }
 
+def wait_whole_second():
+  t = time.time()
+  next = int(t) + 1
+  n = next - t
+  time.sleep(n)
+
 def format_size(s):
   f, u = filesize_ex(s)
   if u:
@@ -48,10 +54,12 @@ def format_size(s):
 
 def gen_text():
   last_recv = last_send = None
+  yield '(init)'
+  wait_whole_second()
 
   while True:
     data = get_data()
-    time.sleep(1)
+    wait_whole_second()
     if not data:
       last_recv = last_send = None
       yield '<span color="#992525">(No network)</span>'
