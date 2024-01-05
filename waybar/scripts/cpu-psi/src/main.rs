@@ -1,9 +1,5 @@
-#![feature(thread_sleep_until)]
-
 use std::fs;
 use std::io::{self, BufRead, Write};
-use std::thread::sleep_until;
-use std::time::{Instant, Duration};
 use std::fmt;
 
 fn get_load() -> f32 {
@@ -62,12 +58,10 @@ impl<T: PartialOrd + fmt::Display> fmt::Display for Colored<T> {
 
 fn main() {
   let mut old_cpuinfo = get_cpu_time();
-  let one_second = Duration::from_secs(1);
-  let mut next_time = Instant::now() + one_second;
   let cpu_count = num_cpus::get() as f32;
   let mut stdout = io::stdout().lock();
   loop {
-    sleep_until(next_time);
+    wait_for_whole_seconds(1);
 
     let cpuinfo = get_cpu_time();
     let load = get_load();
@@ -95,7 +89,19 @@ fn main() {
     stdout.write_all(output.as_bytes()).unwrap();
     stdout.flush().unwrap();
 
-    next_time += one_second;
     old_cpuinfo = cpuinfo;
   }
 }
+
+fn wait_for_whole_seconds(secs: u64) {
+  use std::time::{SystemTime, Duration};
+  use std::thread::sleep;
+
+  let dur = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap();
+  let mut to_wait = Duration::from_secs(1) - Duration::from_nanos(u64::from(dur.subsec_nanos()));
+  if secs > 1 {
+    to_wait += Duration::from_secs(secs - dur.as_secs() % secs)
+  }
+  sleep(to_wait);
+}
+
