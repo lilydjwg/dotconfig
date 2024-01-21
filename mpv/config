@@ -56,6 +56,7 @@ profile-cond = path:match("https://live.bilibili.com")~=nil
 profile-restore = copy
 # mpegts hevc 原画 / flv avc 原画 / ...
 ytdl-format = source-7/source-0/source
+ytdl-raw-options = cookies-from-browser=firefox:nightly::Bilibili
 
 [bilibili]
 profile-desc = Bilibili videos
