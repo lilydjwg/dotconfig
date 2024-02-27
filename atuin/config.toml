@@ -32,7 +32,7 @@ sync_address = "https://lab.lilydjwg.me/atuin"
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy, skim
-search_mode = "exact"
+search_mode = "fulltext"
 
 ## which filter mode to use
 ## possible values: global, host, session, directory
@@ -143,3 +143,6 @@ common_subcommands = [
 # 
 # Set commands that should be totally stripped and ignored from stats
 common_prefix = ["sudo"]
+
+[sync]
+records = true
