@@ -14,6 +14,7 @@ sub-ass-force-margins = yes
 # osd-fractions = yes
 osc = no
 screenshot-format = webp
+no-audio-display
 
 scale = nearest
 dscale = mitchell
