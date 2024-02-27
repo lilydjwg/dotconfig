@@ -1,5 +1,17 @@
 // vim: se ft=json5:
 [{
+  "height": 25,
+  "output": "eDP-1",
+  "modules-left": ["custom/aqi", "custom/media"],
+  "modules-center": ["custom/taskmaid"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "include": [
+    "$HOME/.config/waybar/common_widgets.json5",
+  ],
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid eDP-1",
+  },
+}, {
   "height": 20,
   "output": "DP-2",
   "modules-left": ["custom/aqi", "custom/media"],
