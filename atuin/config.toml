@@ -16,6 +16,12 @@
 ## date format used, either "us" or "uk"
 dialect = "uk"
 
+## default timezone to use when displaying time
+## either "l", "local" to use the system's current local timezone, or an offset
+## from UTC in the format of "<+|->H[H][:M[M][:S[S]]]"
+## for example: "+9", "-05", "+03:30", "-01:23:45", etc.
+# timezone = "local"
+
 ## enable or disable automatic sync
 # auto_sync = true
 
@@ -84,6 +90,9 @@ invert = true
 ## alt-0 .. alt-9
 # ctrl_n_shortcuts = false
 
+## default history list format - can also be specified with the --format arg
+# history_format = "{time}\t{command}\t{duration}"
+
 ## prevent commands matching any of these regexes from being written to history.
 ## Note that these regular expressions are unanchored, i.e. if they don't start
 ## with ^ or end with $, they'll match anywhere in the command.
@@ -125,8 +134,31 @@ invert = true
 # This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
 enter_accept = true
 
+## Defaults to "emacs".  This specifies the keymap on the startup of `atuin
+## search`.  If this is set to "auto", the startup keymap mode in the Atuin
+## search is automatically selected based on the shell's keymap where the
+## keybinding is defined.  If this is set to "emacs", "vim-insert", or
+## "vim-normal", the startup keymap mode in the Atuin search is forced to be
+## the specified one.
+# keymap_mode = "auto"
+
+## Cursor style in each keymap mode.  If specified, the cursor style is changed
+## in entering the cursor shape.  Available values are "default" and
+## "{blink,steady}-{block,underline,bar}".
+# keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
+
+# network_connect_timeout = 5
+# network_timeout = 5
+
+## Timeout (in seconds) for acquiring a local database connection (sqlite)
+# local_timeout = 5
+
+## Set this to true and Atuin will minimize motion in the UI - timers will not update live, etc.
+## Alternatively, set env NO_MOTION=true
+# prefers_reduced_motion = false
+
 [stats]
-# Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
+## Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
 common_subcommands = [
   "cargo",
   "go",
@@ -140,9 +172,12 @@ common_subcommands = [
   "sysuser",
   "atuin",
 ]
-# 
-# Set commands that should be totally stripped and ignored from stats
+
+## Set commands that should be totally stripped and ignored from stats
 common_prefix = ["sudo"]
+
+## Set commands that will be completely ignored from stats
+#ignored_commands = ["cd", "ls", "vi"]
 
 [sync]
 records = true
