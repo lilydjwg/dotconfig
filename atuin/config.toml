@@ -122,6 +122,9 @@ invert = true
 ## amount of commands in your history.
 # show_help = true
 
+## Configure whether or not to show tabs for search and inspect
+show_tabs = false
+
 ## Defaults to true. This matches history against a set of default regex, and will not save it if we get a match. Defaults include
 ## 1. AWS key id
 ## 2. Github pat (old and new)
@@ -178,6 +181,10 @@ common_prefix = ["sudo"]
 
 ## Set commands that will be completely ignored from stats
 #ignored_commands = ["cd", "ls", "vi"]
+
+[keys]
+# Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
+scroll_exits = false
 
 [sync]
 records = true
