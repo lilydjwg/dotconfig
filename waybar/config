@@ -13,7 +13,7 @@
     }
   },
   "clock": {
-    "format": "{:%Y-%m-%d %H:%M:%S %A}",
+    "format": "{:L%Y-%m-%d %H:%M:%S %A}",
     "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
@@ -114,7 +114,7 @@
     }
   },
   "clock": {
-    "format": "{:%Y-%m-%d %H:%M %A}",
+    "format": "{:L%Y-%m-%d %H:%M %A}",
     "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
     "interval": 1,
   },
