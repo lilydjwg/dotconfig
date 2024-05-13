@@ -192,4 +192,11 @@ common_prefix = ["sudo"]
 scroll_exits = false
 
 [sync]
+# Enable sync v2 by default
+# This ensures that sync v2 is enabled for new installs only
+# In a later release it will become the default across the board
 records = true
+
+[daemon]
+enabled = true
+socket_path = "/run/user/1000/atuin.sock"
