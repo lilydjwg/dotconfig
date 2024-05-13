@@ -47,7 +47,7 @@ dscale = spline36
 profile-desc = twitch live videos
 profile-cond = path:match("https://www.twitch.tv/")~=nil
 profile-restore = copy
-ytdl-format = 720p60__source_
+# ytdl-format = 1080p48__source_/720p60__source_
 
 [bilibili-live]
 profile-desc = Bilibili live videos
