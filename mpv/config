@@ -15,6 +15,7 @@ sub-ass-force-margins = yes
 osc = no
 screenshot-format = webp
 no-audio-display
+hidpi-window-scale
 
 scale = nearest
 dscale = mitchell
