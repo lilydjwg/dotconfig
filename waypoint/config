@@ -1,0 +1,75 @@
+bindings {
+  escape quit
+  ctrl+bracketleft quit
+
+  h cut-left
+  j cut-down
+  k cut-up
+  l cut-right
+  left cut-left
+  down cut-down
+  up cut-up
+  right cut-right
+
+  y {
+    cut-left
+    cut-up
+  }
+  p {
+    cut-right
+    cut-up
+  }
+  b {
+    cut-left
+    cut-down
+  }
+  period {
+    cut-right
+    cut-down
+  }
+
+  shift+h move-left
+  shift+j move-down
+  shift+k move-up
+  shift+l move-right
+  shift+left move-left
+  shift+down move-down
+  shift+up move-up
+  shift+right move-right
+
+  shift+y {
+    move-left
+    move-up
+  }
+  shift+p {
+    move-right
+    move-up
+  }
+  shift+b {
+    move-left
+    move-down
+  }
+  shift+period {
+    move-right
+    move-down
+  }
+
+  a undo
+  grave reset
+
+  return {
+    left-click
+    quit
+  }
+  1 left-click
+  2 middle-click
+  3 right-click
+
+  shift+1 left-press
+  shift+2 middle-press
+  shift+3 right-press
+  alt+1 left-release
+  alt+2 middle-release
+  alt+3 right-release
+
+}
