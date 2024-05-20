@@ -61,6 +61,10 @@ bindings {
     left-click
     quit
   }
+  space {
+    left-click
+    quit
+  }
   1 left-click
   2 middle-click
   3 right-click
