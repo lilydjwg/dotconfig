@@ -21,8 +21,7 @@ scale = nearest
 dscale = mitchell
 
 ytdl-raw-options=yes-playlist=
-# mpv will by default pass "bestvideo+bestaudio/best", which selects h264 over vp9 because of its larger size
-ytdl-format=(bestvideo[height<=1080][vcodec^=vp]/bestvideo[height<=1080])+bestaudio/(best[height<=1080][vcodec^=vp]/best[height<=1080])
+ytdl-format=ytdl
 # use yt-dlp
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 
@@ -44,8 +43,6 @@ interpolation = yes
 video-sync = display-resample
 tscale = linear
 
-ytdl-format=(bestvideo[height<=2160][vcodec^=av01]/bestvideo[height<=2160][vcodec^=vp]/bestvideo[height<=2160])+bestaudio/(best[height<=2160][vcodec^=av01]/best[height<=2160][vcodec^=vp]/best[height<=2160])
-
 [twitch-live]
 profile-desc = twitch live videos
 profile-cond = path:match("https://www.twitch.tv/")~=nil
@@ -57,7 +54,7 @@ profile-desc = Bilibili live videos
 profile-cond = path:match("https://live.bilibili.com")~=nil
 profile-restore = copy
 # mpegts hevc 原画 / flv avc 原画 / ...
-ytdl-format = source-7/source-0/source
+ytdl-format = source-7/source-5/source-0/source
 ytdl-raw-options = cookies-from-browser=firefox:nightly::Bilibili
 
 [bilibili]
