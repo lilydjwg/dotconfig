@@ -100,6 +100,7 @@ show_preview = true
 ## https://docs.rs/regex/latest/regex/#syntax
 history_filter = [
   "^(j|nn|n|ydcv|ls)$",
+  "^(j|run-help) ",
   # "^secret-cmd",
   # "^innocuous-cmd .*--secret=.+",
 ]
