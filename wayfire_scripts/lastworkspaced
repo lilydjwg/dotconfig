@@ -23,7 +23,11 @@ def main():
   while True:
     msg = events_sock.read_message()
     if msg['event'] == 'wset-workspace-changed':
-      last_workspace[msg['output']].append(msg['new-workspace'])
+      wss = last_workspace[msg['output']]
+      nws = msg['new-workspace']
+      if wss and wss[-1] == nws:
+        continue
+      wss.append(nws)
     elif msg['event'] == 'output-gain-focus':
       last_output = msg['id']
     else:
