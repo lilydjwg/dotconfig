@@ -28,7 +28,7 @@ def main():
       if wss and wss[-1] == nws:
         continue
       wss.append(nws)
-    elif msg['event'] == 'output-gain-focus':
+    elif msg['event'] == 'output-gain-focus' and 'id' in msg:
       last_output = msg['id']
     else:
       logging.error('unexpected event: %r', msg)
