@@ -65,6 +65,8 @@ SimpleEventHook {
   },
   execute = function (event)
     local source, om, si, si_props, si_flags, target = lutils:unwrap_select_target_event (event)
+    -- not sure why but occasionally it is nil
+    if not target then return end
     local name = si_props["node.name"]
     local target_direction = cutils.getTargetDirection(si_props)
     local target_props = target.properties
