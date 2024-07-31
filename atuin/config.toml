@@ -71,7 +71,7 @@ invert = true
 
 ## enable or disable showing a preview of the selected command
 ## useful when the command is longer than the terminal width and is cut off
-show_preview = true
+# show_preview = true
 
 ## what to do when the escape key is pressed when searching
 ## possible values: return-original, return-query
@@ -191,6 +191,7 @@ common_prefix = ["sudo"]
 [keys]
 # Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
 scroll_exits = false
+prefix = "t"
 
 [sync]
 # Enable sync v2 by default
@@ -201,3 +202,6 @@ records = true
 [daemon]
 enabled = true
 socket_path = "/run/user/1000/atuin.sock"
+
+[theme]
+name = "lily"
