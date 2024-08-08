@@ -6,6 +6,7 @@
   "modules-center": ["custom/taskmaid"],
   "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
+    "cursor": false,
     "format": "{icon}",
     "format-icons": {
       "activated": "",
@@ -111,6 +112,7 @@
   "modules-center": ["custom/taskmaid"],
   "modules-right": ["idle_inhibitor", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
   "idle_inhibitor": {
+    "cursor": false,
     "format": "{icon}",
     "format-icons": {
       "activated": "",
