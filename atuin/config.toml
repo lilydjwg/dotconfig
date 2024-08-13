@@ -200,8 +200,21 @@ prefix = "t"
 records = true
 
 [daemon]
+## Enables using the daemon to sync. Requires the daemon to be running in the background. Start it with `atuin daemon`
 enabled = true
-socket_path = "/run/user/1000/atuin.sock"
 
-[theme]
-name = "lily"
+## How often the daemon should sync in seconds
+# sync_frequency = 300
+
+## The path to the unix socket used by the daemon (on unix systems)
+## linux/mac: ~/.local/share/atuin/atuin.sock
+## windows: Not Supported
+# socket_path = "~/.local/share/atuin/atuin.sock"
+
+## Use systemd socket activation rather than opening the given path (the path must still be correct for the client)
+## linux: false
+## mac/windows: Not Supported
+# systemd_socket = false
+
+## The port that should be used for TCP on non unix systems
+# tcp_port = 8889
