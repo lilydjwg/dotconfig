@@ -39,9 +39,9 @@ profile-cond = p['user-data/hostname'] == "lilyboudoir"
 scale = ewa_lanczos
 dscale = spline36
 
-interpolation = yes
-video-sync = display-resample
-tscale = linear
+# interpolation = yes
+# video-sync = display-resample
+# tscale = linear
 
 [twitch-live]
 profile-desc = twitch live videos
