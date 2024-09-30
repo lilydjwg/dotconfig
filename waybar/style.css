@@ -6,6 +6,9 @@ widget > * {
   min-height: 0;
   padding: 0 0.2em;
   margin: 0 0.1em;
+  /* avoid height change due to different text
+   * https://github.com/Alexays/Waybar/issues/2026#issuecomment-1780717766 */
+  margin-top: -50px; margin-bottom: -50px;
 }
 
 window#waybar {
