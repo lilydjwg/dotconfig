@@ -1,0 +1,22 @@
+# https://wiki.archlinux.org/title/PipeWire/Examples#Echo_cancellation
+context.modules = [
+    {   name = libpipewire-module-echo-cancel
+        args = {
+            monitor.mode = true
+            source.props = {
+                node.name = "source_ec"
+                node.description = "Echo-cancelled source"
+            }
+            aec.args = {
+                # Settings for the WebRTC echo cancellation engine
+                # https://gitlab.freedesktop.org/pipewire/pipewire/-/blob/master/spa/plugins/aec/aec-webrtc.cpp#L97
+                # webrtc.gain_control = true
+                # webrtc.extended_filter = false
+                #webrtc.analog_gain_control = false
+                #webrtc.digital_gain_control = true
+                #webrtc.experimental_agc = true
+                #webrtc.noise_suppression = true
+            }
+        }
+    }
+]
