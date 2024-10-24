@@ -28,8 +28,14 @@ def main():
       if wss and wss[-1] == nws:
         continue
       wss.append(nws)
-    elif msg['event'] == 'output-gain-focus' and 'id' in msg:
-      last_output = msg['id']
+    elif msg['event'] == 'output-gain-focus' and (oid := msg['output'].get('id')):
+      last_output = oid
+      wss = last_workspace[oid]
+      nws = msg['output']['workspace']
+      nws = {'x': nws['x'], 'y': nws['y']} # remove grid_height & grid_width
+      if wss and wss[-1] == nws:
+        continue
+      wss.append(nws)
     else:
       logging.error('unexpected event: %r', msg)
 
