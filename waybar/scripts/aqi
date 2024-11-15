@@ -5,8 +5,7 @@ import os
 import json
 import httpx
 import time
-
-import tomli
+import tomllib
 
 client = httpx.Client(http2=True)
 
@@ -95,7 +94,7 @@ def wait_some_time():
 def main():
   mydir = os.path.dirname(__file__)
   with open(os.path.join(mydir, 'secrets.toml'), 'rb') as f:
-    config = tomli.load(f)['aqi']
+    config = tomllib.load(f)['aqi']
 
   site = config.get('site', 'aqicn')
   aqi = AQI.create(site, config)
