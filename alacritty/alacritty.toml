@@ -1,4 +1,3 @@
-working_directory = "/home/lilydjwg/tmpfs"
 
 [colors.bright]
 black = "0x555555"
@@ -47,3 +46,6 @@ mods = "None"
 
 [mouse]
 hide_when_typing = true
+
+[general]
+working_directory = "/home/lilydjwg/tmpfs"
