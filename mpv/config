@@ -16,6 +16,8 @@ osc = no
 screenshot-format = webp
 no-audio-display
 hidpi-window-scale
+# avoid taking a lot of CPU on the terminal when network data is cached
+quiet
 
 scale = nearest
 dscale = mitchell
