@@ -1,0 +1,32 @@
+[viewer]
+window = #000000ff
+
+[gallery]
+window = #000000ff
+
+[keys.viewer]
+s = antialiasing next
+Shift+s = antialiasing prev
+
+ScrollUp = zoom +20
+ScrollDown = zoom -20
+w = zoom fit
+
+Equal = zoom real
+1 = zoom real
+2 = zoom real; zoom +100
+3 = zoom real; zoom +200
+4 = zoom real; zoom +300
+5 = zoom real; zoom -50
+
+n = next_file
+p = prev_file
+
+Shift+less = rotate_left
+Shift+greater = rotate_right
+Alt+u = info off
+
+[list]
+order = none
+
+# vim: se ft=dosini:
