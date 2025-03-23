@@ -11,6 +11,7 @@ Shift+s = antialiasing prev
 ScrollUp = zoom +20
 ScrollDown = zoom -20
 w = zoom fit
+z = keep_zoom
 
 Equal = zoom real
 1 = zoom real
