@@ -30,4 +30,9 @@ Alt+u = info off
 [list]
 order = none
 
+[font]
+name = 思源黑体
+size = 24
+color = #ffffffff
+
 # vim: se ft=dosini:
