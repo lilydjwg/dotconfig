@@ -1,5 +1,7 @@
 [viewer]
 window = #000000ff
+scale = fit
+fixed = no
 
 [gallery]
 window = #000000ff
@@ -31,8 +33,9 @@ Alt+u = info off
 order = none
 
 [font]
+# swayimg doesn't do font fallback
 name = 思源黑体
-size = 24
+size = 16
 color = #ffffffff
 
 # vim: se ft=dosini:
