@@ -27,7 +27,36 @@ p = prev_file
 
 Shift+less = rotate_left
 Shift+greater = rotate_right
+
+i = info viewer
+u = info off
 Alt+u = info off
+
+g = mode gallery
+
+[keys.gallery]
+v = mode viewer
+space = mode viewer
+
+n = next_file
+p = prev_file
+h = prev_file
+j = step_down
+l = next_file
+k = step_up
+# ^
+Shift+asciicircum = first_file
+Shift+dollar = last_file
+g = first_file
+Shift+g = last_file
+
+i = info gallery
+u = info off
+Alt+u = info off
+
+[info]
+show = no
+info_timeout = 0
 
 [list]
 order = none
