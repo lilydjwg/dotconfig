@@ -40,12 +40,17 @@ sync_address = "https://lab.lilydjwg.me/atuin"
 ## possible values: prefix, fulltext, fuzzy, skim
 search_mode = "fulltext"
 
-## which filter mode to use
-## possible values: global, host, session, directory
+## which filter mode to use by default
+## possible values: "global", "host", "session", "directory", "workspace"
+## consider using search.filters to customize the enablement and order of filter modes
 filter_mode = "host"
 
 ## With workspace filtering enabled, Atuin will filter for commands executed
-## in any directory within a git repository tree (default: false)
+## in any directory within a git repository tree (default: false).
+##
+## To use workspace mode by default when available, set this to true and
+## set filter_mode to "workspace" or leave it unspecified and 
+## set search.filters to include "workspace" before other filter modes.
 # workspaces = false
 
 ## which filter mode to use when atuin is invoked from a shell up-key binding
@@ -127,13 +132,20 @@ history_filter = [
 ## Configure whether or not to show tabs for search and inspect
 show_tabs = false
 
+## Configure whether or not the tabs row may be auto-hidden, which includes the current Atuin
+## tab, such as Search or Inspector, and other tabs you may wish to see. This will
+## only be hidden if there are fewer than this count of lines available, and does not affect the use
+## of keyboard shortcuts to switch tab. 0 to never auto-hide, default is 8 (lines).
+## This is ignored except in `compact` mode.
+# auto_hide_height = 8
+
 ## Defaults to true. This matches history against a set of default regex, and will not save it if we get a match. Defaults include
 ## 1. AWS key id
 ## 2. Github pat (old and new)
 ## 3. Slack oauth tokens (bot, user)
 ## 4. Slack webhooks
 ## 5. Stripe live/test keys
-# secrets_filter = true
+secrets_filter = false
 
 ## Defaults to true. If enabled, upon hitting enter Atuin will immediately execute the command. Press tab to return to the shell and edit.
 # This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
@@ -156,7 +168,7 @@ enter_accept = true
 # network_timeout = 5
 
 ## Timeout (in seconds) for acquiring a local database connection (sqlite)
-# local_timeout = 5
+local_timeout = 60
 
 ## Set this to true and Atuin will minimize motion in the UI - timers will not update live, etc.
 ## Alternatively, set env NO_MOTION=true
@@ -192,6 +204,10 @@ common_prefix = ["sudo"]
 # Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
 scroll_exits = false
 prefix = "t"
+# Defaults to true. The left arrow key will exit the TUI when scrolling before the first character
+exit_past_line_start = false
+# Defaults to true. The right arrow key performs the same functionality as Tab and copies the selected line to the command line to be modified.
+accept_past_line_end = false
 
 [sync]
 # Enable sync v2 by default
@@ -242,3 +258,6 @@ enabled = true
 ## Whether the theme manager should output normal or extra information to help fix themes.
 ## Boolean, true or false. If unset, left up to the theme manager.
 # debug = true
+
+[search]
+filters = ["host", "session", "global", "directory"]
