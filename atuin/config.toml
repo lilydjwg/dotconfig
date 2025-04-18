@@ -260,4 +260,4 @@ enabled = true
 # debug = true
 
 [search]
-filters = ["host", "session", "global", "directory"]
+filters = ["host", "directory", "global", "session"]
