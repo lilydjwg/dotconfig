@@ -1,7 +1,7 @@
 [viewer]
 window = #000000ff
 scale = fit
-fixed = no
+position = free
 
 [gallery]
 window = #000000ff
