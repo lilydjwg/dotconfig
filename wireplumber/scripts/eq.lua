@@ -2,28 +2,32 @@ lutils = require ("linking-utils")
 cutils = require ("common-utils")
 log = Log.open_topic ("s-linking")
 
-should_use_bose_eq = function(name, device_id)
-  log:debug("should_use_bose_eq: " .. name .. ", " .. tostring(device_id))
+use_which_eq = function(name, device_id)
+  log:debug("use_which_eq: " .. name .. ", " .. tostring(device_id))
   if name == "alsa_output.pci-0000_0f_00.4.analog-stereo" then
-    return true
+    return 'bose'
   elseif name == "bluez_output.C8_7B_23_7F_7F_81.1" then
-    return true
+    return 'bose'
+  elseif name == "bluez_output.0C_AE_BD_26_A6_63.1" then
+    return 'edifier'
   elseif name:match("alsa_output%.pci%-0000_00_1f%.3.*%.analog%-stereo") then
     local port_name = get_device_port_name(device_id)
     log:debug("port_name: " .. tostring(port_name))
-    return port_name == "analog-output-headphones"
+    if port_name == "analog-output-headphones" then
+      return 'bose'
+    end
   end
 end
 
-find_bose_eq = function(om)
+find_eq = function(om, name)
   local target = om:lookup {
     type = "SiLinkable",
-    Constraint { "node.name", "=", "effect_input.bose_eq" },
+    Constraint { "node.name", "=", "effect_input." .. name .. "_eq" },
   }
   return target
 end
 
-find_bose = function(om)
+find_eq_target = function(om, eq_name)
   for target in om:iterate {
     type = "SiLinkable",
     Constraint { "item.node.type", "=", "device" },
@@ -32,7 +36,7 @@ find_bose = function(om)
   } do
     local target_props = target.properties
     local target_name = target_props["node.name"]
-    if should_use_bose_eq(target_name) then
+    if use_which_eq(target_name) == eq_name then
       return target
     end
   end
@@ -79,17 +83,18 @@ SimpleEventHook {
     if not dont_move
       and not si_flags.has_defined_target
       and target_direction == "input"
-      and name ~= "effect_output.bose_eq" then
-      if should_use_bose_eq(target_name, device_id) then
+      and not name:match("effect_output%..*_eq") then
+      local eq_name = use_which_eq(target_name, device_id)
+      if eq_name then
         log:info("switched name: " .. name)
-        event:set_data("target", find_bose_eq(om))
+        event:set_data("target", find_eq(om, eq_name))
       end
     end
 
-    if name == "effect_output.bose_eq"
-      and not should_use_bose_eq(target_name, device_id) then
-      local t = find_bose(om)
-      log:info("found bose: " .. tostring(t))
+    local eq_name = name:match("effect_output%.(.*)_eq")
+    if eq_name and not use_which_eq(target_name, device_id) then
+      local t = find_eq_target(om, eq_name)
+      log:info("found eq target: " .. tostring(t))
       if t then
         event:set_data("target", t)
       end
