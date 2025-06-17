@@ -10,6 +10,8 @@ use_which_eq = function(name, device_id)
     return 'bose'
   elseif name == "bluez_output.0C_AE_BD_26_A6_63.1" then
     return 'edifier'
+  elseif name == "bluez_output.2C_41_A1_BC_8B_3A.1" then
+    return 'qc30'
   elseif name:match("alsa_output%.pci%-0000_00_1f%.3.*%.analog%-stereo") then
     local port_name = get_device_port_name(device_id)
     log:debug("port_name: " .. tostring(port_name))
@@ -60,7 +62,7 @@ get_device_port_name = function(device_id)
 end
 
 SimpleEventHook {
-  name = "linking/bose-eq",
+  name = "linking/eq",
   after = "linking/find-best-target",
   interests = {
     EventInterest {
@@ -92,9 +94,9 @@ SimpleEventHook {
     end
 
     local eq_name = name:match("effect_output%.(.*)_eq")
-    if eq_name and not use_which_eq(target_name, device_id) then
+    if eq_name and use_which_eq(target_name, device_id) ~= eq_name then
       local t = find_eq_target(om, eq_name)
-      log:info("found eq target: " .. tostring(t))
+      log:info("found eq target for " .. name .. ": " .. tostring(t))
       if t then
         event:set_data("target", t)
       end
