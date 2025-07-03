@@ -5,7 +5,9 @@ sub-pos = 95
 sub-font-size = 30
 demuxer-readahead-secs = 20
 hwdec = vaapi
-vo = dmabuf-wayland,gpu-next,
+# dmabuf-wayland doesn't support deband
+# vo = dmabuf-wayland,gpu-next,
+vo = gpu-next,
 # this will cause broken cover images
 # hwdec-codecs = all
 # move subtitles to margins
@@ -21,6 +23,7 @@ quiet
 
 scale = nearest
 dscale = mitchell
+deband
 
 ytdl-raw-options=yes-playlist=
 ytdl-format=ytdl
