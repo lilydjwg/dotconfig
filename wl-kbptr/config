@@ -1,0 +1,18 @@
+[general]
+home_row_keys=
+modes=floating,click
+cancellation_status_code=0
+
+[mode_floating]
+source=detect
+label_color=#000000
+label_select_color=#fffabaa0
+unselectable_bg_color=#0000
+selectable_bg_color=#e4a6fec0
+selectable_border_color=#a923e3
+label_font_family=sans-serif
+label_font_size=12 90% 100
+label_symbols=abcdefghijklmnopqrstuvwxyz
+
+[mode_click]
+button=left
