@@ -113,7 +113,7 @@ show_numeric_shortcuts = false
 ## For details on the supported regular expression syntax, see
 ## https://docs.rs/regex/latest/regex/#syntax
 history_filter = [
-  "^(j|nn|n|ydcv|ls|\\.\\.|fg)$",
+  "^(j|nn|n|ydcv|ls|\\.\\.|fg|ll|mutt|py|nb)$",
   "^(j|run-help) ",
   # "^secret-cmd",
   # "^innocuous-cmd .*--secret=.+",
