@@ -63,6 +63,7 @@ end
 
 SimpleEventHook {
   name = "linking/eq",
+  before = "linking/prepare-link",
   after = "linking/find-best-target",
   interests = {
     EventInterest {
