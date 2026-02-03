@@ -50,13 +50,13 @@ dscale = spline36
 
 [twitch-live]
 profile-desc = twitch live videos
-profile-cond = path:match("https://www.twitch.tv/")~=nil
+profile-cond = path:match("https://www.twitch.tv/")
 profile-restore = copy
 # ytdl-format = 1080p48__source_/720p60__source_
 
 [bilibili-live]
 profile-desc = Bilibili live videos
-profile-cond = path:match("https://live.bilibili.com")~=nil
+profile-cond = path:match("https://live.bilibili.com")
 profile-restore = copy
 # mpegts hevc 原画 / flv avc 原画 / ...
 ytdl-format = source-7/source-5/source-0/source
@@ -64,7 +64,7 @@ ytdl-raw-options = cookies-from-browser=firefox:nightly::Bilibili
 
 [bilibili]
 profile-desc = Bilibili videos
-profile-cond = path:match("https://www.bilibili.com")~=nil or path:match("https://bilibili.com")~=nil
+profile-cond = path:match("https://www.bilibili.com") or path:match("https://bilibili.com")
 profile-restore = copy
 referrer = https://www.bilibili.com/
 ytdl-raw-options = cookies-from-browser=firefox:nightly::Bilibili
