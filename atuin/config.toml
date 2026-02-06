@@ -131,7 +131,7 @@ history_filter = [
 ## Configure the maximum height of the preview to show.
 ## Useful when you have long scripts in your history that you want to distinguish
 ## by more than the first few lines.
-# max_preview_height = 4
+max_preview_height = 10
 
 ## Configure whether or not to show the help row, which includes the current Atuin
 ## version (and whether an update is available), a keymap hint, and the total
@@ -212,19 +212,6 @@ common_prefix = ["sudo"]
 #   "vi"
 # ]
 
-[keys]
-# Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
-scroll_exits = false
-prefix = "t"
-# Defaults to true. The left arrow key will exit the TUI when scrolling before the first character
-exit_past_line_start = false
-# Defaults to true. The right arrow key performs the same functionality as Tab and copies the selected line to the command line to be modified.
-accept_past_line_end = false
-# Defaults to false. The left arrow key performs the same functionality as Tab and copies the selected line to the command line to be modified.
-# accept_past_line_start = false
-# Defaults to false. The backspace key performs the same functionality as Tab and copies the selected line to the command line to be modified when at the start of the line.
-# accept_with_backspace = false
-
 [sync]
 # Enable sync v2 by default
 # This ensures that sync v2 is enabled for new installs only
@@ -281,3 +268,22 @@ enabled = true
 ## Default filter mode can be overridden with the filter_mode setting.
 # filters = [ "global", "host", "session", "session-preload", "workspace", "directory" ]
 filters = ["host", "directory", "global", "session"]
+
+[keymap.emacs]
+"shift-delete" = "delete"
+"ctrl-d" = "delete"
+"ctrl-u" = "clear-to-start"
+"ctrl-k" = "clear-to-end"
+"alt-d" = "delete-word-after"
+"f12" = "toggle-tab"
+
+# keys migration
+"down" = "select-next"
+"up" = "select-previous"
+"ctrl-t" = "enter-prefix-mode"
+"ctrl-a" = "cursor-start"
+"left" = "cursor-left"
+"right" = "cursor-right"
+
+[keymap.inspector]
+"f12" = "toggle-tab"
