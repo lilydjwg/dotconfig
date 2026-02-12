@@ -280,7 +280,7 @@ filters = ["host", "directory", "global", "session"]
 # keys migration
 "down" = "select-next"
 "up" = "select-previous"
-"ctrl-t" = "enter-prefix-mode"
+"ctrl-x" = "enter-prefix-mode"
 "ctrl-a" = "cursor-start"
 "left" = "cursor-left"
 "right" = "cursor-right"
