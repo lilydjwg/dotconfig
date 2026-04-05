@@ -1,3 +1,9 @@
+## Base directory for Atuin data files (databases, keys, session, etc.)
+## All data file paths default to being relative to this directory.
+## linux/mac: ~/.local/share/atuin (or XDG_DATA_HOME/atuin)
+## windows: %USERPROFILE%/.local/share/atuin
+# data_dir = "~/.local/share/atuin"
+
 ## where to store your database, default is your system data directory
 ## linux/mac: ~/.local/share/atuin/history.db
 ## windows: %USERPROFILE%/.local/share/atuin/history.db
@@ -49,7 +55,7 @@ filter_mode = "host"
 ## in any directory within a git repository tree (default: false).
 ##
 ## To use workspace mode by default when available, set this to true and
-## set filter_mode to "workspace" or leave it unspecified and 
+## set filter_mode to "workspace" or leave it unspecified and
 ## set search.filters to include "workspace" before other filter modes.
 # workspaces = false
 
@@ -78,6 +84,8 @@ style = "compact"
 
 ## Invert the UI - put the search bar at the top , Default to `false`
 invert = true
+
+no_mouse = true
 
 ## enable or disable showing a preview of the selected command
 ## useful when the command is longer than the terminal width and is cut off
@@ -156,8 +164,10 @@ show_tabs = false
 ## 5. Stripe live/test keys
 secrets_filter = false
 
-## Defaults to true. If enabled, upon hitting enter Atuin will immediately execute the command. Press tab to return to the shell and edit.
-# This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
+## Defaults to true. If enabled, upon hitting enter Atuin will immediately execute the command,
+## whereas tab will put the command in the prompt for editing.
+## If set to false, both enter and tab will place the command in the prompt for editing.
+## This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
 enter_accept = true
 
 ## Defaults to false. If enabled, when triggered after &&, || or |, Atuin will complete commands to chain rather than replace the current line.
@@ -212,6 +222,41 @@ common_prefix = ["sudo"]
 #   "vi"
 # ]
 
+[keys]
+# Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
+# scroll_exits = true
+
+# Defaults to true. The left arrow key will exit the TUI when scrolling before the first character
+# exit_past_line_start = true
+
+# Defaults to true. The right arrow key performs the same functionality as Tab and copies the selected line to the command line to be modified.
+# accept_past_line_end = true
+
+# Defaults to false. The left arrow key performs the same functionality as Tab and copies the selected line to the command line to be modified.
+# accept_past_line_start = false
+
+# Defaults to false. The backspace key performs the same functionality as Tab and copies the selected line to the command line to be modified when at the start of the line.
+# accept_with_backspace = false
+
+[keymap.emacs]
+"shift-delete" = "delete"
+"ctrl-d" = "delete"
+"ctrl-u" = "clear-to-start"
+"ctrl-k" = "clear-to-end"
+"alt-d" = "delete-word-after"
+"f12" = "toggle-tab"
+
+# keys migration
+"down" = "select-next"
+"up" = "select-previous"
+"ctrl-x" = "enter-prefix-mode"
+"ctrl-a" = "cursor-start"
+"left" = "cursor-left"
+"right" = "cursor-right"
+
+[keymap.inspector]
+"f12" = "toggle-tab"
+
 [sync]
 # Enable sync v2 by default
 # This ensures that sync v2 is enabled for new installs only
@@ -227,8 +272,12 @@ records = true
 # strategy = "auto"
 
 [daemon]
-## Enables using the daemon to sync. Requires the daemon to be running in the background. Start it with `atuin daemon`
+## Enables using the daemon to sync.
 enabled = true
+
+## Automatically start and manage the daemon when needed.
+## Not compatible with `systemd_socket = true`.
+# autostart = false
 
 ## How often the daemon should sync in seconds
 # sync_frequency = 300
@@ -237,6 +286,10 @@ enabled = true
 ## linux/mac: ~/.local/share/atuin/atuin.sock
 ## windows: Not Supported
 # socket_path = "~/.local/share/atuin/atuin.sock"
+
+## The daemon pidfile used for lifecycle management.
+## Defaults to the Atuin data directory.
+pidfile_path = "$XDG_RUNTIME_DIR/atuin-daemon.pid"
 
 ## Use systemd socket activation rather than opening the given path (the path must still be correct for the client)
 ## linux: false
@@ -269,21 +322,63 @@ enabled = true
 # filters = [ "global", "host", "session", "session-preload", "workspace", "directory" ]
 filters = ["host", "directory", "global", "session"]
 
-[keymap.emacs]
-"shift-delete" = "delete"
-"ctrl-d" = "delete"
-"ctrl-u" = "clear-to-start"
-"ctrl-k" = "clear-to-end"
-"alt-d" = "delete-word-after"
-"f12" = "toggle-tab"
+[tmux]
+## Enable using atuin with tmux popup (requires tmux >= 3.2)
+## When enabled and running inside tmux, Atuin will use a popup window for interactive search.
+## Set to false to disable the popup.
+## This can also be controlled with the ATUIN_TMUX_POPUP environment variable.
+## Note: The tmux popup is currently supported in zsh, bash, and fish shells. This currently doesn't work with iTerm native tmux integration.
+# enabled = false
 
-# keys migration
-"down" = "select-next"
-"up" = "select-previous"
-"ctrl-x" = "enter-prefix-mode"
-"ctrl-a" = "cursor-start"
-"left" = "cursor-left"
-"right" = "cursor-right"
+## Width of the tmux popup window
+## Can be a percentage, or integer (e.g. "100" means 100 characters wide)
+# width = "80%"
 
-[keymap.inspector]
-"f12" = "toggle-tab"
+## Height of the tmux popup window
+## Can be a percentage, or integer (e.g. "100" means 100 lines tall)
+# height = "60%"
+
+[ui]
+## Columns to display in the interactive search, from left to right.
+## The selection indicator (" > ") is always shown first implicitly.
+##
+## Each column can be specified as a simple string (uses default width)
+## or as an object with type, width, and expand:
+##   { type = "directory", width = 30, expand = true }
+##
+## Available column types (with default widths):
+##   duration  (5)  - Command execution duration (e.g., "123ms")
+##   time      (8)  - Relative time since execution (e.g., "59m ago")
+##   datetime  (16) - Absolute timestamp (e.g., "2025-01-22 14:35")
+##   directory (20) - Working directory (truncated if too long)
+##   host      (15) - Hostname where command was run
+##   user      (10) - Username
+##   exit      (3)  - Exit code (colored by success/failure)
+##   command   (*)  - The command itself (expands by default)
+##
+## The "expand" option (default: true for command, false for others) makes a
+## column fill remaining space. Only one column should have expand = true.
+##
+## Default:
+# columns = ["duration", "time", "command"]
+##
+## Examples:
+##
+## Minimal - more space for commands:
+# columns = ["duration", "command"]
+##
+## With wider directory column:
+# columns = ["duration", { type = "directory", width = 30 }, "command"]
+##
+## Show host for multi-machine sync users:
+# columns = ["duration", "time", "host", "command"]
+##
+## Show exit codes prominently:
+# columns = ["exit", "duration", "command"]
+##
+## Make directory expand instead of command:
+# columns = ["duration", "time", { type = "directory", expand = true }, { type = "command", expand = false }]
+
+[logs]
+enabled = false
+dir = "~/.cache/atuin/logs"
