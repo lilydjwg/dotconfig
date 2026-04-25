@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+xrdb -merge ~/.Xresources
+# for whatever reason wayfire fails to load the cursor and so fails to set it
+xsetroot -cursor_name left_ptr
+dbus-send --type=method_call --dest=org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1.OpenX11Connection string:"$DISPLAY"
+# ~/scripts/shell/xwayland-setdpi 2
