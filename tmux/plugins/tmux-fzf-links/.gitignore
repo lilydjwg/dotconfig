@@ -1,0 +1,5 @@
+**/*.sublime-workspace
+**/*.pyc
+**/*.egg-info
+dist/*
+/.agent-shell/
