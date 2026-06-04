@@ -28,6 +28,9 @@ def main():
       if wss and wss[-1] == nws:
         continue
       wss.append(nws)
+      # set initial last_output
+      if last_output is None:
+        last_output = msg['output']
     elif msg['event'] == 'output-gain-focus' and (oid := msg['output'].get('id')):
       last_output = oid
       wss = last_workspace[oid]
@@ -41,10 +44,7 @@ def main():
 
 def goto_last_workspace():
   commands_sock = WayfireSocket(addr)
-  if last_output is None:
-    o = commands_sock.list_outputs()[0]['id']
-  else:
-    o = last_output
+  o = last_output
   ws = last_workspace.get(o)
   if not ws or len(ws) != 2:
     logging.warning('no last workspace')
