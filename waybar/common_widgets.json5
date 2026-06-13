@@ -17,7 +17,7 @@
   },
   "temperature": {
     // "thermal-zone": 2,
-    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
     "critical-threshold": 90,
     // "format-critical": "{temperatureC}°C {icon}",
     "format": "{temperatureC}°C {icon}",
@@ -99,5 +99,11 @@
     "exec": "~/.config/waybar/scripts/cpu-psi/cpu-psi",
     "return-type": "json",
     "escape": false,
+  },
+  "custom/amdgpu": {
+    "cursor": false,
+    "exec": "amdgpu_top -J | jq -r --unbuffered '.devices[0] | [[.GRBM, .GRBM2] | .. | objects | .value] | max' | while read a; do printf 'GPU%4d%%\n' $a; done",
+    "on-click": "amdgpu_top --gui",
+    "tooltip": false,
   },
 }
