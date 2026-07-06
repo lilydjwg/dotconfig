@@ -8,18 +8,22 @@
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid DP-2",
+  },
 }, {
   "height": 20,
   "output": "HDMI-A-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
   "modules-right": ["idle_inhibitor", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
-  "clock": {
-    "format": "{:L%Y-%m-%d %H:%M %A}",
-    "tooltip-format": "<span font=\"文泉驿等宽正黑 11\">      {:%Y %B}\n\n{calendar}</span>",
-    "interval": 1,
-  },
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
+  "custom/taskmaid": {
+    "exec": "~/.config/waybar/scripts/taskmaid HDMI-A-1",
+  },
+  "clock": {
+    "format": "{:L%Y-%m-%d %H:%M %A}",
+  },
 }]
