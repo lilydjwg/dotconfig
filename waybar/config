@@ -4,7 +4,7 @@
   "output": "DP-2",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "pulseaudio", "tray", "clock"],
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
@@ -16,7 +16,7 @@
   "output": "HDMI-A-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "temperature", "memory", "pulseaudio", "tray", "clock"],
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
@@ -31,7 +31,7 @@
   "output": "HEADLESS-2",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "pulseaudio", "tray", "clock"],
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
@@ -43,7 +43,7 @@
   "output": "HEADLESS-1",
   "modules-left": ["custom/aqi", "custom/media"],
   "modules-center": ["custom/taskmaid"],
-  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "battery", "pulseaudio", "tray", "clock"],
+  "modules-right": ["idle_inhibitor", "custom/netspeed", "custom/cpu", "custom/amdgpu", "temperature", "memory", "pulseaudio", "tray", "clock"],
   "include": [
     "$HOME/.config/waybar/common_widgets.json5",
   ],
