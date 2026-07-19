@@ -5,3 +5,10 @@ When writing code:
 
 * Do not ignore or skip unexpected errors / exceptions; Let it fail so the user
   can investigate.
+* When introducing a new library dependency, ensure that it is still
+  well-maintained by using available Web tools.
+
+When debugging:
+
+* Before fetching / git cloning code you need to look at from the Internet,
+  confirm with the user, since the user may already have the code somewhere locally.
