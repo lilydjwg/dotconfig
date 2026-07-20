@@ -7,6 +7,8 @@ When writing code:
   can investigate.
 * When introducing a new library dependency, ensure that it is still
   well-maintained by using available Web tools.
+* Make sure that the last line of a text file has an terminating end-of-line
+  charater.
 
 When debugging:
 
