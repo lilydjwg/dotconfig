@@ -1,0 +1,94 @@
+#!/usr/bin/python3
+
+import os
+import logging
+import threading
+import socket
+import json
+from collections import defaultdict, deque
+
+from wayfire_socket import WayfireSocket
+
+addr = os.getenv('WAYFIRE_SOCKET')
+
+last_workspace = defaultdict(lambda: deque(maxlen=2))
+last_output = None
+
+def main():
+  global last_output
+
+  events_sock = WayfireSocket(addr)
+  events_sock.watch(['wset-workspace-changed', 'output-gain-focus'])
+
+  while True:
+    msg = events_sock.read_message()
+    if msg['event'] == 'wset-workspace-changed':
+      wss = last_workspace[msg['output']]
+      nws = msg['new-workspace']
+      if wss and wss[-1] == nws:
+        continue
+      wss.append(nws)
+      # set initial last_output
+      if last_output is None:
+        last_output = msg['output']
+    elif msg['event'] == 'output-gain-focus' and (oid := msg['output'].get('id')):
+      last_output = oid
+      wss = last_workspace[oid]
+      nws = msg['output']['workspace']
+      nws = {'x': nws['x'], 'y': nws['y']} # remove grid_height & grid_width
+      if wss and wss[-1] == nws:
+        continue
+      wss.append(nws)
+    else:
+      logging.error('unexpected event: %r', msg)
+
+def goto_last_workspace():
+  commands_sock = WayfireSocket(addr)
+  o = last_output
+  ws = last_workspace.get(o)
+  if not ws or len(ws) != 2:
+    logging.warning('no last workspace')
+    return
+  ws = ws[0]
+
+  message = {
+    'method': 'vswitch/set-workspace',
+    'data': {
+      'output-id': o,
+      'x': ws['x'],
+      'y': ws['y'],
+    }
+  }
+  logging.debug('go %s', message)
+  commands_sock.send_json(message)
+
+class Command(threading.Thread):
+  daemon = True
+  def run(self):
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+    sock.bind('\0lastworkspaced')
+
+    while True:
+      try:
+        data = sock.recv(4096)
+        j = json.loads(data)
+        logging.info('command: %r', j)
+        if j['cmd'] == 'go':
+          goto_last_workspace()
+      except Exception:
+        logging.exception('command error')
+
+if __name__ == '__main__':
+  import nicelogger
+  nicelogger.enable_pretty_logging('WARNING')
+  try:
+    import setproctitle
+    setproctitle.setproctitle('lastworkspaced')
+  except ImportError:
+    pass
+
+  Command().start()
+  try:
+    main()
+  except KeyboardInterrupt:
+    print()

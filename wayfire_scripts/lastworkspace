@@ -1,0 +1,12 @@
+#!/usr/bin/python3
+
+import socket
+
+def main():
+  sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+  sock.connect('\0lastworkspaced')
+  sock.send(b'{"cmd": "go"}')
+  sock.close()
+
+if __name__ == '__main__':
+  main()
