@@ -1,0 +1,11 @@
+#env
+LESS = -FRXM 
+#version >= 705 LESS += --use-color -DO- -DSkW -DPkW -DEkW
+
+LESS_TERMCAP_mb = \e[91m
+LESS_TERMCAP_md = \e[38;5;74m
+LESS_TERMCAP_me = \e[0m
+LESS_TERMCAP_se = \e[0m
+LESS_TERMCAP_so = \e[7m
+LESS_TERMCAP_ue = \e[0m
+LESS_TERMCAP_us = \e[04;38;5;146m
